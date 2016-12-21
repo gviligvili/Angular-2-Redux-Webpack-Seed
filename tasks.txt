@@ -1,2 +1,4 @@
+-- TODO: Implement Time travel,
+
 -- TODO:  Bootstrap glyphicons and font awsome just show no content in icons.
 -- TODO:  Tests works manually, but i can't debug them in webstorm, wierd for some reason he doesn't recognize lodash.
