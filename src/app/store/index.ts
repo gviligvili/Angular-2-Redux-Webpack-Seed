@@ -1,4 +1,4 @@
-import { IAppState, rootReducer, deimmutify, reimmutify } from './store';
+import { IAppState, rootReducer } from './store';
 import { ICounter } from './counter';
 import { ISession } from './session';
 
@@ -9,7 +9,6 @@ export {
   ISession,
   ICounter,
   rootReducer,
-  reimmutify,
 };
 
 export let middleware = [];
@@ -20,7 +19,6 @@ if (ENV === "development") {
     createLogger({
     level: 'info',
     collapsed: true,
-    stateTransformer: deimmutify,
   }));
 }
 

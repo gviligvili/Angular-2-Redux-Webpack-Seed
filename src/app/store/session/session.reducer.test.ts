@@ -1,10 +1,10 @@
 import { Iterable } from 'immutable';
-import { ISessionRecord } from './session.types';
+import { ISession } from './session.types';
 import { sessionReducer } from './session.reducer';
 import { SessionActions } from '../../actions/session.actions';
 
 describe('Session Reducer', () => {
-  let initState: ISessionRecord;
+  let initState: ISession;
 
   beforeEach(() => {
     initState = sessionReducer(undefined, { type: 'TEST_INIT'});
@@ -18,8 +18,8 @@ describe('Session Reducer', () => {
     const nextState = sessionReducer(
       initState,
       { type: SessionActions.LOGIN_USER });
-    expect(nextState.get('isLoading')).toBeTruthy;
-    expect(nextState.get('token')).toEqual(null);
+    expect(nextState.isLoading).toBeTruthy;
+    expect(nextState.token).toEqual(null);
   });
 
   it('should save the user token on LOGIN_USER_SUCCESS', () => {
@@ -30,25 +30,25 @@ describe('Session Reducer', () => {
         payload: { token: 1234 }
       }
     );
-    expect(nextState.get('isLoading')).toBeFalsy;
-    expect(nextState.get('hasError')).toBeFalsy;
-    expect(nextState.get('token')).toEqual(1234);
+    expect(nextState.isLoading).toBeFalsy;
+    expect(nextState.hasError).toBeFalsy;
+    expect(nextState.token).toEqual(1234);
   });
 
   it('should flag an error on LOGIN_USER_ERROR', () => {
     const nextState = sessionReducer(
       initState,
       { type: SessionActions.LOGIN_USER_ERROR });
-    expect(nextState.get('isLoading')).toBeFalsy;
-    expect(nextState.get('hasError')).toBeTruthy;
+    expect(nextState.isLoading).toBeFalsy;
+    expect(nextState.hasError).toBeTruthy;
   });
 
   it('should clear user data on LOGOUT_USER', () => {
     const nextState = sessionReducer(
       initState,
       { type: SessionActions.LOGOUT_USER });
-    expect(nextState.get('isLoading')).toBeTruthy;
-    expect(nextState.get('hasError')).toBeFalsy;
-    expect(nextState.get('token')).toEqual(null);
+    expect(nextState.isLoading).toBeTruthy;
+    expect(nextState.hasError).toBeFalsy;
+    expect(nextState.token).toEqual(null);
   });
 });
