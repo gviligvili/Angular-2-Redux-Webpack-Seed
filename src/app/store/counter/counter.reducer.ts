@@ -15,7 +15,7 @@ export function counterReducer(state: ICounter = INITIAL_STATE, action: Action):
     return Object.assign({}, state, { counter: state.counter-1})
 
   case SessionActions.LOGOUT_USER:
-    return Object.assign({}, INITIAL_STATE)
+    return INITIAL_STATE;
 
   default:
     return state;

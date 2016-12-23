@@ -3,6 +3,8 @@ import { ICounter } from './counter';
 import { ISession } from './session';
 
 const createLogger = require('redux-logger');
+const persistState = require('redux-localstorage');
+
 
 export {
   IAppState,
@@ -20,6 +22,8 @@ if (ENV === "development") {
     level: 'info',
     collapsed: true,
   }));
+
+  //enhancers.push(persistState('counter', { key: 'ng2-redux/examples/counter' }))
 }
 
 

@@ -1,10 +1,12 @@
 import * as counter from './counter';
 import * as session from './session';
+// import * as articles from './articles'
 import rootReducer from './reducers'
 
 export interface IAppState {
   counter?: counter.ICounter;
   session?: session.ISession;
+  // articles?: articles.IArticles;
 };
 
 export {rootReducer}

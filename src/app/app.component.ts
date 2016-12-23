@@ -28,8 +28,8 @@ import { Component, ViewEncapsulation } from '@angular/core';
       </span>
       |
       <span>
-        <a [routerLink]=" ['./detail'] ">
-          Detail
+        <a [routerLink]=" ['./articles'] ">
+          Articles
         </a>
       </span>
       |

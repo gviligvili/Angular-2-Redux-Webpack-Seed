@@ -27,6 +27,7 @@ import {IAppState, rootReducer} from "./store/store";
 import {middleware, enhancers} from "./store/index";
 import {NgReduxModule, DevToolsExtension, NgRedux} from "ng2-redux/lib/index";
 import {root} from "rxjs/util/root";
+import {ArticlesModule} from "./modules/articles/articles.module";
 
 
 /**
@@ -59,7 +60,8 @@ type StoreType = {
         AlertModule,
         DatepickerModule,
         NgReduxModule.forRoot(),
-        RouterModule.forRoot(ROUTES, {useHash: true, preloadingStrategy: PreloadAllModules})
+        RouterModule.forRoot(ROUTES, {useHash: true, preloadingStrategy: PreloadAllModules}),
+        ArticlesModule
     ],
     providers: [ // expose our Services and Providers into Angular's dependency injection
         ENV_PROVIDERS,
@@ -78,7 +80,7 @@ export class AppModule {
 
         this.configureStore({});
 
-        console.log("################ INITIALIZED STORE #################" , window.location.href.match(/[?&]debug_session=([^&]+)\b/));
+        console.log("################ INITIALIZED STORE #################")
 
     }
 
@@ -93,30 +95,28 @@ export class AppModule {
     }
 
     hmrOnInit(store:StoreType) {
-        console.log("################ HMR ON INIT ################");
-
-        console.log('%c storee: ', 'background: #222; color: #bada55', store, store.state);
-
-        // If store or store.state doesn't exist, return. (Suppose to be when app just started).
-        if (!store || !store.state) return;
-        console.log('HMR store', JSON.stringify(store, null, 2));
-        console.log('%c @@@@@@Store: ', store, " store.state ", store.state, 'background: #222; color: #bada55');
-
-        /**
-         *  Set the state we saved before HMR
-         */
-
-        if (module.hot) {
-            console.log("Got INto IF !@#");
-            module.hot.accept("./store/reducers", () => {
-                console.log(" MODULE.HOT.ACCEPT @@@@#@%#$%$^$%&$%&");
-                debugger;
-                const nextReducer = require('./store/reducers');
-                this.ngRedux.replaceReducer(nextReducer);
-            });
-        }
-
-        // this.ngRedux.? = this.store.state
+        // console.log("################ HMR ON INIT ################");
+        //
+        // // If store or store.state doesn't exist, return. (Suppose to be when app just started).
+        // if (!store || !store.state) return;
+        // console.log('HMR store', JSON.stringify(store, null, 2));
+        // console.log('%c @@@@@@Store: ', store, " store.state ", store.state, 'background: #222; color: #bada55');
+        //
+        // /**
+        //  *  Set the state we saved before HMR
+        //  */
+        //
+        // if (module.hot) {
+        //     console.log("Got INto IF !@#");
+        //     module.hot.accept("./store/reducers", () => {
+        //         console.log(" MODULE.HOT.ACCEPT @@@@#@%#$%$^$%&$%&");
+        //         debugger;
+        //         const nextReducer = require('./store/reducers');
+        //         this.ngRedux.replaceReducer(nextReducer);
+        //     });
+        // }
+        //
+        // // this.ngRedux.? = this.store.state
 
         // set input values
         if ('restoreInputValues' in store) {

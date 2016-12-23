@@ -39,9 +39,7 @@ export class HomeComponent {
 
   ngOnInit() {
     console.log('helllo `Home` component');
-    let harta = [123]
-    console.log("loadash ", _.concat(harta,[3456]));
-    console.log("jquery ", $);
+    console.log("loadash ", !!_, "jquery ", !!$);
 
   }
 

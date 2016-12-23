@@ -8,6 +8,7 @@ const path = require('path');
 /**
  * Webpack Plugins
  */
+const webpack = require('webpack');
 const ProvidePlugin = require('webpack/lib/ProvidePlugin');
 const DefinePlugin = require('webpack/lib/DefinePlugin');
 const LoaderOptionsPlugin = require('webpack/lib/LoaderOptionsPlugin');
@@ -33,6 +34,15 @@ module.exports = function (options) {
      * See: https://github.com/webpack/karma-webpack#source-maps
      */
     devtool: 'inline-source-map',
+
+    /**
+     * Adding this property for solving problem with hot reload on windows.
+     * The windows drops warning about size of files after compile, so we need to disable file size optimization.
+     * This property used only in dev environment.
+     */
+    performance: {
+      hints: false
+    },
 
     /**
      * Options affecting the resolving of modules.
@@ -216,7 +226,15 @@ module.exports = function (options) {
 
         }
       }),
-
+      new webpack.ProvidePlugin({
+        jQuery: 'jquery',
+        $: 'jquery',
+        jquery: 'jquery'
+      }),
+      new webpack.ProvidePlugin({
+        lodash: 'lodash',
+        _: 'lodash'
+      })
     ],
 
     /**
