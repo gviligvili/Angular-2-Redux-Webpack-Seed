@@ -1,3 +1,5 @@
+"use strict";
+
 /**
  * @author: @AngularClass
  */
@@ -253,4 +255,4 @@ module.exports = function (options) {
     }
 
   };
-}
+};
