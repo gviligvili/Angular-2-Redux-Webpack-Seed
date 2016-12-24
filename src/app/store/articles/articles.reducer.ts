@@ -1,24 +1,31 @@
 /**
  * Created by talgvili on 22/12/2016.
  */
+import Immutable from 'immutable'
 import { Action } from 'redux';
 import { ArticlesActions } from '../../actions/articlesActions/articles.actions'
-const INITIAL_STATE = {
-    pending: false
-}
+import {IPayloadAction} from "../../actions";
+import {ARTICLES_INITIAL_STATE} from "./articles.initial-state";
 
-export function articlesReducer(state:any = INITIAL_STATE, action: Action): any {
+export function articlesReducer(state = ARTICLES_INITIAL_STATE, action: IPayloadAction): any {
 
     switch (action.type) {
 
         case ArticlesActions.FETCH_ARTICLES_REQUEST:
-            return Object.assign({}, state, { pending: true})
+            return state.set("pending", true)
 
         case ArticlesActions.FETCH_ARTICLES_SUCCESS:
-            return Object.assign({}, state, { pending: false})
+            return state.clear("articles").merge({ articles: action.payload.aricles, pending: false})
 
         case ArticlesActions.FETCH_ARTICLES_FAILURE:
-            return Object.assign({}, state, { pending: false})
+            return state.set({ error: action.payload.error, pending: false})
+
+        case ArticlesActions.ADD_ARTICLE:
+            return state.setIn(["articles", action.payload.article.id], action.payload.article)
+
+        case ArticlesActions.REMOVE_ARTICLE:
+            return state.deleteIn(["articles", String(action.payload.id)])
+
         default:
             return state;
     }

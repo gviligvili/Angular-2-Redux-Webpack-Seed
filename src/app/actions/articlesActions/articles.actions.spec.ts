@@ -23,6 +23,9 @@ import {ArticlesActions} from './articles.actions';
 import {TestBed, inject, async} from "@angular/core/testing";
 import {HttpModule, Http, BaseRequestOptions, Response, ResponseOptions} from "@angular/http";
 import {MockBackend} from "@angular/http/testing";
+import {normalize} from 'normalizr'
+
+import {articleSchema} from "../../store/schemas";
 
 class MockRedux extends NgRedux<any> {
     constructor() {
@@ -31,6 +34,46 @@ class MockRedux extends NgRedux<any> {
 
     dispatch = function(){};
 }
+
+
+let articlesMock = [{
+        "id": 1,
+        "title": "Some Article",
+        "author": {
+            "id": 7,
+            "name": "Dan"
+        },
+        "contributors": [
+            {
+                "id": 10,
+                "name": "Abe"
+            },
+            {
+                "id": 15,
+                "name": "Fred"
+            }
+        ]
+    },
+        {
+            "id": 2,
+            "title": "Some Article",
+            "author": {
+                "id": 10,
+                "name": "Abe"
+            },
+            "contributors": [
+                {
+                    "id": 4,
+                    "name": "Tal"
+                },
+                {
+                    "id": 15,
+                    "name": "Fred"
+                }
+            ]
+        }
+    ]
+
 
 describe('articles action creators', () => {
     let mockRedux:NgRedux<any>;
@@ -53,7 +96,6 @@ describe('articles action creators', () => {
                     },
                     deps: [MockBackend, BaseRequestOptions]
                 },
-                // { provide: VIMEO_API_URL, useValue: 'http://example.com' },
                 {
                     provide: ArticlesActions,
                     useFactory: (http:Http) => {
@@ -66,23 +108,80 @@ describe('articles action creators', () => {
     });
 
 
-
-    it('Fetching Articles should dispatch FETCH_ARTICLES_REQUEST action', inject([ArticlesActions], (articlesActions /** It will be the service Variable !!*/) => {
+    it('should add article', inject([ArticlesActions], (articlesActions /** It will be the service Variable !!*/) => {
         // Set up
+        let articleData = articlesMock[0]
+        let article = normalize(articleData, articleSchema)
+
+
+
         const expectedAction = {
-            type: ArticlesActions.FETCH_ARTICLES_REQUEST /** It will be the service CLASS INSTANCE !! That's why I can reach his static members.*/
+            type: ArticlesActions.ADD_ARTICLE, /** It will be the service CLASS INSTANCE !! That's why I can reach his static members.*/
+            payload: {
+                article: article,
+            }
         };
+
         var funcSpy = spy(mockRedux, "dispatch");
 
+
+
         // Actions
-        articlesActions.fetchArticles();
+        articlesActions.addArticle(articleData);
+
+
 
         // Tests.
         funcSpy.should.have.been.called;
         funcSpy.should.have.been.calledWith(expectedAction)
     }));
 
-    fit('failing to fetch articles should dispatch FETCH_ARTICLES_FAILURE action', async(inject([ArticlesActions, MockBackend], (articlesActions, mockBackend) => {
+    it('should remove article', inject([ArticlesActions], (articlesActions /** It will be the service Variable !!*/) => {
+            // Set up
+            let article = articlesMock[0]
+
+            const expectedAction = {
+                type: ArticlesActions.REMOVE_ARTICLE, /** It will be the service CLASS INSTANCE !! That's why I can reach his static members.*/
+                payload: {
+                    id: article.id,
+                }
+            };
+
+            var funcSpy = spy(mockRedux, "dispatch");
+
+
+
+            // Actions
+            articlesActions.removeArticle(article.id);
+
+
+
+            // Tests.
+            funcSpy.should.have.been.called;
+            funcSpy.should.have.been.calledWith(expectedAction)
+    }));
+
+
+    it('Fetching Articles should dispatch FETCH_ARTICLES_REQUEST action', inject([ArticlesActions], (articlesActions) => {
+        // Set up
+        const expectedAction = {
+            type: ArticlesActions.FETCH_ARTICLES_REQUEST
+        };
+        var funcSpy = spy(mockRedux, "dispatch");
+
+
+
+        // Actions
+        articlesActions.fetchArticles();
+
+
+
+        // Tests.
+        funcSpy.should.have.been.called;
+        funcSpy.should.have.been.calledWith(expectedAction)
+    }));
+
+    it('failing to fetch articles should dispatch FETCH_ARTICLES_FAILURE action', async(inject([ArticlesActions, MockBackend], (articlesActions, mockBackend) => {
 
 
         // Setup
@@ -109,8 +208,12 @@ describe('articles action creators', () => {
 
         var funcSpy = spy(mockRedux, 'dispatch');
 
+
+
         // Actions
         articlesActions.fetchArticles().then(testing)
+
+
 
         //Test
         function testing() {
@@ -123,6 +226,9 @@ describe('articles action creators', () => {
     it('should succeed fetching the articles and dispatch FETCH_ARTICLES_SUCCESS action with articles payload.', async(inject([ArticlesActions, MockBackend], (articlesActions, mockBackend) => {
 
         // Setup
+
+        let articles = normalize(articlesMock, articleSchema)
+
         const expectedFirstAction = {
             type: ArticlesActions.FETCH_ARTICLES_REQUEST
         };
@@ -130,7 +236,7 @@ describe('articles action creators', () => {
         const expectedSecondAction = {
             type: ArticlesActions.FETCH_ARTICLES_SUCCESS,
             payload: {
-                articles: {}
+                articles: articles
             }
         }
 
@@ -142,14 +248,18 @@ describe('articles action creators', () => {
          */
         mockBackend.connections.subscribe((connection) => {
             connection.mockRespond(new Response(new ResponseOptions({
-                body: JSON.stringify({})
+                body: articlesMock
             })));
         });
 
         var funcSpy = spy(mockRedux, 'dispatch');
 
+
+
         // Actions
         articlesActions.fetchArticles().then(testing)
+
+
 
         //Test
         function testing() {
@@ -159,3 +269,12 @@ describe('articles action creators', () => {
         }
     })));
 });
+
+/***
+ * TODO:
+ * Add to tests also :
+ * in FETCH_SUCCESS : put one article before dispatch, and check if he overriden and only the answer applies
+ *
+ * in all of them,
+ * check user service is dispatching.
+ ***/

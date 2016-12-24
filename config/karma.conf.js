@@ -1,8 +1,8 @@
-"use strict";
-
 /**
  * @author: @AngularClass
  */
+
+const autowatch = process.env.npm_lifecycle_script.indexOf('--auto-watch') !== -1;
 
 module.exports = function(config) {
   var testWebpackConfig = require('./webpack.test.js')({env: 'test'});
@@ -17,7 +17,7 @@ module.exports = function(config) {
      *
      * available frameworks: https://npmjs.org/browse/keyword/karma-adapter
      */
-    frameworks: ['jasmine',  'sinon', 'chai'],
+    frameworks: ['jasmine', 'sinon', 'chai'],
 
     // list of files to exclude
     exclude: [ ],
@@ -33,23 +33,14 @@ module.exports = function(config) {
      * preprocess matching files before serving them to the browser
      * available preprocessors: https://npmjs.org/browse/keyword/karma-preprocessor
      */
-    preprocessors: { './config/spec-bundle.js': ['coverage', 'webpack', 'sourcemap'] },
+    // skip coverage in watch mode
+    preprocessors: { './config/spec-bundle.js': autowatch ? ['webpack', 'sourcemap'] : ['coverage', 'webpack', 'sourcemap'] },
 
     // Webpack Config at ./webpack.test.js
     webpack: testWebpackConfig,
 
-    coverageReporter: {
-      type: 'in-memory'
-    },
-
-    remapCoverageReporter: {
-      'text-summary': null,
-      json: './coverage/coverage.json',
-      html: './coverage/html'
-    },
-
     // Webpack please don't spam the console when running in karma!
-    webpackMiddleware: { stats: 'errors-only'},
+    webpackServer: { noInfo: true },
 
     /*
      * test results reporter to use
@@ -57,7 +48,7 @@ module.exports = function(config) {
      * possible values: 'dots', 'progress'
      * available reporters: https://npmjs.org/browse/keyword/karma-reporter
      */
-    reporters: [ 'mocha', 'coverage', 'remap-coverage' ],
+    reporters: [ 'mocha'],
 
     // web server port
     port: 9876,
@@ -97,9 +88,21 @@ module.exports = function(config) {
   };
 
   if (process.env.TRAVIS){
-    configuration.browsers = [
-      'ChromeTravisCi'
-    ];
+    configuration.browsers = ['ChromeTravisCi'];
+  }
+
+  // skip coverage in watch mode
+  if (!autowatch) {
+    configuration.reporters.push('coverage');
+    configuration.coverageReporter = {
+      dir : 'coverage/',
+      reporters: [
+        { type: 'text-summary' },
+        { type: 'json' },
+        { type: 'html' }
+      ]
+    };
+
   }
 
   config.set(configuration);

@@ -1,4 +1,4 @@
-import {Schema} from "normalizr/lib/index";
+import {Schema} from "normalizr";
 
 const userSchema = new Schema('users');
 
