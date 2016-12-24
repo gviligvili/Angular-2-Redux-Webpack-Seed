@@ -19,6 +19,9 @@
     "types": [
       "hammerjs",
       "jasmine",
+      "sinon",
+      "chai",
+      "sinon-chai",
       "node",
       "selenium-webdriver",
       "source-map",

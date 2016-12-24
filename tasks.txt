@@ -1,3 +1,5 @@
+-- TODO: Make test:watch a task without coverage, and make the coverage the same as test just with coverage turned on.
+
 -- TODO: Type script doesn't really reinforce types after reducers, like in counter reducer, I can change counter to a string value, it wont say anything about it suppose to be a number.
  I found way to reinforce it, but its TOO strict, it require us to know each and everyfield or else its ton of work.
  so or it either too loose or too strict.

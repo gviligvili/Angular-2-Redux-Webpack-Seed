@@ -2,6 +2,22 @@
  * Created by talgvili on 22/12/2016.
  */
 
+/**
+ * Every test should have this :
+ */
+var chai = require('chai')
+import * as sinon from 'sinon';
+import { assert, expect } from 'chai'
+import { spy } from 'sinon'
+// Letting spies use assertions
+var sinonChai = require("sinon-chai");
+chai.should();
+chai.use(sinonChai);
+
+
+
+
+
 import {NgRedux, NgReduxModule} from 'ng2-redux';
 import {ArticlesActions} from './articles.actions';
 import {TestBed, inject, async} from "@angular/core/testing";
@@ -13,31 +29,10 @@ class MockRedux extends NgRedux<any> {
         super(null);
     }
 
-    dispatch:() => {};
+    dispatch = function(){};
 }
 
-const mockResponse = {
-    "articles": {
-        "id": 1,
-        "title": "Some Article",
-        "author": {
-            "id": 7,
-            "name": "Dan"
-        },
-        "contributors": [
-            {
-                "id": 10,
-                "name": "Abe"
-            },
-            {
-                "id": 15,
-                "name": "Fred"
-            }
-        ]
-    }
-}
-
-fdescribe('articles action creators', () => {
+describe('articles action creators', () => {
     let mockRedux:NgRedux<any>;
 
     beforeEach(() => {
@@ -71,23 +66,61 @@ fdescribe('articles action creators', () => {
     });
 
 
-    it('Fetching Articles should dispatch FETCH_ARTICLES_REQUEST action', inject([ArticlesActions], (articlesActions /** It will be the service Variable !!*/) => {
 
+    it('Fetching Articles should dispatch FETCH_ARTICLES_REQUEST action', inject([ArticlesActions], (articlesActions /** It will be the service Variable !!*/) => {
         // Set up
         const expectedAction = {
             type: ArticlesActions.FETCH_ARTICLES_REQUEST /** It will be the service CLASS INSTANCE !! That's why I can reach his static members.*/
         };
+        var funcSpy = spy(mockRedux, "dispatch");
 
         // Actions
-        var spy = spyOn(mockRedux, 'dispatch');
         articlesActions.fetchArticles();
 
         // Tests.
-        expect(mockRedux.dispatch).toHaveBeenCalled();
-        expect(mockRedux.dispatch).toHaveBeenCalledWith(expectedAction);
+        funcSpy.should.have.been.called;
+        funcSpy.should.have.been.calledWith(expectedAction)
     }));
 
-    it('failing to fetch articles should dispatch FETCH_ARTICLES_FAILURE action', inject([ArticlesActions, MockBackend], (articlesActions, mockBackend) => {
+    fit('failing to fetch articles should dispatch FETCH_ARTICLES_FAILURE action', async(inject([ArticlesActions, MockBackend], (articlesActions, mockBackend) => {
+
+
+        // Setup
+        const errorMessage = "error"
+
+        const expectedFirstAction = {
+            type: ArticlesActions.FETCH_ARTICLES_REQUEST
+        };
+        const expectedSecondAction = {
+            type: ArticlesActions.FETCH_ARTICLES_FAILURE,
+            payload: {
+                error: errorMessage
+            }
+        }
+
+        /**
+         *  This is called every time someone subscribes to
+         *  an http call.
+         *  Here we want to fake the http response.
+         */
+        mockBackend.connections.subscribe((connection) => {
+            connection.mockError(new Error(errorMessage));
+        });
+
+        var funcSpy = spy(mockRedux, 'dispatch');
+
+        // Actions
+        articlesActions.fetchArticles().then(testing)
+
+        //Test
+        function testing() {
+            funcSpy.should.have.been.calledTwice;
+            funcSpy.getCall(0).should.have.been.calledWithExactly(expectedFirstAction)
+            funcSpy.getCall(1).should.have.been.calledWithExactly(expectedSecondAction)
+        }
+    })));
+
+    it('should succeed fetching the articles and dispatch FETCH_ARTICLES_SUCCESS action with articles payload.', async(inject([ArticlesActions, MockBackend], (articlesActions, mockBackend) => {
 
         // Setup
         const expectedFirstAction = {
@@ -95,7 +128,10 @@ fdescribe('articles action creators', () => {
         };
 
         const expectedSecondAction = {
-            type: ArticlesActions.FETCH_ARTICLES_FAILURE
+            type: ArticlesActions.FETCH_ARTICLES_SUCCESS,
+            payload: {
+                articles: {}
+            }
         }
 
 
@@ -106,20 +142,20 @@ fdescribe('articles action creators', () => {
          */
         mockBackend.connections.subscribe((connection) => {
             connection.mockRespond(new Response(new ResponseOptions({
-                body: JSON.stringify(mockResponse)
+                body: JSON.stringify({})
             })));
         });
 
-            // Actions
-        var spy = spyOn(mockRedux, 'dispatch');
-        articlesActions.fetchArticles().subscribe(() => {
-            console.log("WTFF ASDFSLKADFMASJFASF@#$@#%%%%%%%%%%%%%%%%%%%%%%%");
-        });
+        var funcSpy = spy(mockRedux, 'dispatch');
 
-        // Test
-        expect(spy.calls.count()).toBe(2);
-        // expect(spy.calls.first().args[0]).toHaveBeenCalledWith(expectedFirstAction);
-        // // Check for the second time, after respond was recieved.
-        // expect(spy.calls.argsFor(1)).toHaveBeenCalledWith(expectedSecondAction)
-    }));
+        // Actions
+        articlesActions.fetchArticles().then(testing)
+
+        //Test
+        function testing() {
+            funcSpy.should.have.been.calledTwice;
+            funcSpy.getCall(0).should.have.been.calledWithExactly(expectedFirstAction)
+            funcSpy.getCall(1).should.have.been.calledWithExactly(expectedSecondAction)
+        }
+    })));
 });

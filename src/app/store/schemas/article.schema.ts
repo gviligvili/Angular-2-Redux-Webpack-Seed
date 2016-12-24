@@ -4,7 +4,7 @@
 
 import { Schema, arrayOf } from 'normalizr';
 import { userSchema } from './user.schema'
-const articleSchema = Schema("article");
+const articleSchema = new Schema("article");
 
 articleSchema.define({
     author: userSchema,

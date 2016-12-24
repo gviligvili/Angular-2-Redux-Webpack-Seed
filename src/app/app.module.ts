@@ -59,7 +59,7 @@ type StoreType = {
         HttpModule,
         AlertModule,
         DatepickerModule,
-        NgReduxModule.forRoot(),
+        NgReduxModule,
         RouterModule.forRoot(ROUTES, {useHash: true, preloadingStrategy: PreloadAllModules}),
         ArticlesModule
     ],

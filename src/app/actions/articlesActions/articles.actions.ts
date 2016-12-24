@@ -18,11 +18,16 @@ export class ArticlesActions {
         // this.http.get('http://localhost:1337/articles').map((res: Response) => res.json()).subscribe(res => console.log("RES : IS ", res));
 
         return this.http.get('http://localhost:1337/articles')
-            .map((res: Response) => res.json())
+            .toPromise()
+            .then((res: Response) => {
+                let articles = res.json()
+                this.ngRedux.dispatch({ type: ArticlesActions.FETCH_ARTICLES_SUCCESS, payload: { articles } });
+                return articles
+            })
             .catch((err) => {
-                console.log(" Error fetching articles")
-
-                return Observable.throw("Error fetching articles")
+                this.ngRedux.dispatch({ type: ArticlesActions.FETCH_ARTICLES_FAILURE, payload: { error: err.message } });
+                console.error("Error fetching articles")
+                return err
             })
     }
 }
