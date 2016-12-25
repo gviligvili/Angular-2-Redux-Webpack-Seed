@@ -15,7 +15,7 @@ export function articlesReducer(state = ARTICLES_INITIAL_STATE, action: IPayload
             return state.set("pending", true)
 
         case ArticlesActions.FETCH_ARTICLES_SUCCESS:
-            return state.clear("articles").merge({ articles: action.payload.aricles, pending: false})
+            return state.merge({ articles: action.payload.articles, pending: false})
 
         case ArticlesActions.FETCH_ARTICLES_FAILURE:
             return state.set({ error: action.payload.error, pending: false})
