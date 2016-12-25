@@ -6,6 +6,7 @@ import { CommonModule } from '@angular/common';
 import {NgRedux} from "ng2-redux/lib/index";
 import {ArticlesComponent} from "./articles.component";
 import {ArticlesActions} from "../../actions/articlesActions/articles.actions";
+import {ArticlesView} from "./components/articles-view/articles-view.component";
 
 // import { CreditCardMaskPipe } from './credit-card-mask.pipe';
 // import { CreditCardService } from './credit-card.service';
@@ -14,7 +15,8 @@ import {ArticlesActions} from "../../actions/articlesActions/articles.actions";
 @NgModule({
     imports: [CommonModule],
     declarations: [
-        ArticlesComponent
+        ArticlesComponent,
+        ArticlesView
     ],
     providers: [
         NgRedux,

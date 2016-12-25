@@ -25,7 +25,7 @@ import {HttpModule, Http, BaseRequestOptions, Response, ResponseOptions} from "@
 import {MockBackend} from "@angular/http/testing";
 import {normalize} from 'normalizr'
 
-import {articleSchema} from "../../store/schemas";
+import {articleSchema, arrayOfArticlesSchema} from "../../store/schemas";
 
 class MockRedux extends NgRedux<any> {
     constructor() {
@@ -34,7 +34,6 @@ class MockRedux extends NgRedux<any> {
 
     dispatch = function(){};
 }
-
 
 let articlesMock = [{
         "id": 1,
@@ -112,7 +111,6 @@ describe('articles action creators', () => {
         // Set up
         let articleData = articlesMock[0]
         let article = normalize(articleData, articleSchema)
-
 
 
         const expectedAction = {
@@ -227,8 +225,8 @@ describe('articles action creators', () => {
 
         // Setup
 
-        let articles = normalize(articlesMock, articleSchema)
-
+        let normalizedArticles = normalize(articlesMock, arrayOfArticlesSchema)
+        let articles = normalizedArticles.entities.article
         const expectedFirstAction = {
             type: ArticlesActions.FETCH_ARTICLES_REQUEST
         };

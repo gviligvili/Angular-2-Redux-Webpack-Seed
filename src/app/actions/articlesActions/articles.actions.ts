@@ -4,7 +4,7 @@ import { IAppState } from '../../store/store';
 import {Http, Response} from "@angular/http";
 import {Observable} from "rxjs/Rx";
 import {normalize} from 'normalizr'
-import {articleSchema} from "../../store/schemas/article.schema";
+import {articleSchema, arrayOfArticlesSchema} from "../../store/schemas";
 
 
 @Injectable()
@@ -29,7 +29,10 @@ export class ArticlesActions {
 
                 // Normalizing our data, and dispatching to for everyone who needs to know (in this case, user service
                 // should dispatch to the store the received contributors and authors (because they are a user models).
-                let articles = normalize(articlesData, articleSchema)
+                let normalizedAnswer = normalize(articlesData, arrayOfArticlesSchema)
+
+                // All the articles normalized data
+                let articles = normalizedAnswer.entities.article
                 this.ngRedux.dispatch({ type: ArticlesActions.FETCH_ARTICLES_SUCCESS, payload: { articles } });
                 return articles
             })
