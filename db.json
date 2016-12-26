@@ -18,8 +18,8 @@
     ]
   },
     {
-      "id": 2,
-      "title": "Some Article",
+      "id": 7,
+      "title": "Some Other Article",
       "author": {
         "id": 10,
         "name": "Abe"

@@ -110,11 +110,12 @@ describe('articles action creators', () => {
     it('should add article', inject([ArticlesActions], (articlesActions /** It will be the service Variable !!*/) => {
         // Set up
         let articleData = articlesMock[0]
-        let article = normalize(articleData, articleSchema)
-
+        let articleNormalized = normalize(articleData, articleSchema)
+        // Getting the article object only.
+        let article = _.values(articleNormalized.entities.article)[0]
 
         const expectedAction = {
-            type: ArticlesActions.ADD_ARTICLE, /** It will be the service CLASS INSTANCE !! That's why I can reach his static members.*/
+            type: ArticlesActions.SET_ARTICLE, /** It will be the service CLASS INSTANCE !! That's why I can reach his static members.*/
             payload: {
                 article: article,
             }
@@ -221,12 +222,14 @@ describe('articles action creators', () => {
         }
     })));
 
-    it('should succeed fetching the articles and dispatch FETCH_ARTICLES_SUCCESS action with articles payload.', async(inject([ArticlesActions, MockBackend], (articlesActions, mockBackend) => {
+    it('should succeed fetching the articles and dispatch FETCH_ARTICLES_SUCCESS action with articles and users payload.', async(inject([ArticlesActions, MockBackend], (articlesActions, mockBackend) => {
 
         // Setup
 
         let normalizedArticles = normalize(articlesMock, arrayOfArticlesSchema)
-        let articles = normalizedArticles.entities.article
+        let articles = normalizedArticles.entities.article;
+        let users = normalizedArticles.entities.user;
+
         const expectedFirstAction = {
             type: ArticlesActions.FETCH_ARTICLES_REQUEST
         };
@@ -234,7 +237,8 @@ describe('articles action creators', () => {
         const expectedSecondAction = {
             type: ArticlesActions.FETCH_ARTICLES_SUCCESS,
             payload: {
-                articles: articles
+                articles: articles,
+                users: users
             }
         }
 
@@ -267,12 +271,3 @@ describe('articles action creators', () => {
         }
     })));
 });
-
-/***
- * TODO:
- * Add to tests also :
- * in FETCH_SUCCESS : put one article before dispatch, and check if he overriden and only the answer applies
- *
- * in all of them,
- * check user service is dispatching.
- ***/

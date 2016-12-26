@@ -15,6 +15,9 @@ export let middleware = [];
 export let enhancers = [];
 
 if (ENV === "development") {
+  // For "bows" module to work
+  localStorage["debug"] = true
+
   middleware.push(
     createLogger({
     level: 'info',

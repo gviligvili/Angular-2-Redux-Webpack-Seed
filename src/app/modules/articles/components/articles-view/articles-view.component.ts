@@ -2,10 +2,13 @@
  * Created by talgvili on 24/12/2016.
  */
 import {Component, Input, OnInit, OnChanges, ChangeDetectionStrategy} from '@angular/core';
+var bows = require("bows")
+var blog = bows("article-view changed !", "with params ?")
 
 @Component({
     selector: 'articles-view',
     templateUrl: 'articles-view.component.html',
+    styleUrls: ['./articles-view.component.scss'],
     changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ArticlesView implements OnInit, OnChanges{
@@ -18,6 +21,6 @@ export class ArticlesView implements OnInit, OnChanges{
     }
 
     ngOnChanges() {
-        console.log("articles-view changed to", this.articles);
+        blog(this.articles, "pending? ", this.pending, "error? ", this.error);
     }
 }

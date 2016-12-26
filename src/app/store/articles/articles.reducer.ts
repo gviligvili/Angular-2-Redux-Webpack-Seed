@@ -1,8 +1,6 @@
 /**
  * Created by talgvili on 22/12/2016.
  */
-import Immutable from 'immutable'
-import { Action } from 'redux';
 import { ArticlesActions } from '../../actions/articlesActions/articles.actions'
 import {IPayloadAction} from "../../actions";
 import {ARTICLES_INITIAL_STATE} from "./articles.initial-state";
@@ -10,17 +8,16 @@ import {ARTICLES_INITIAL_STATE} from "./articles.initial-state";
 export function articlesReducer(state = ARTICLES_INITIAL_STATE, action: IPayloadAction): any {
 
     switch (action.type) {
-
         case ArticlesActions.FETCH_ARTICLES_REQUEST:
-            return state.set("pending", true)
+            return state.merge({pending: true, error: false})
 
         case ArticlesActions.FETCH_ARTICLES_SUCCESS:
-            return state.merge({ articles: action.payload.articles, pending: false})
+            return state.merge({ articles: action.payload.articles, pending: false, error: false})
 
         case ArticlesActions.FETCH_ARTICLES_FAILURE:
-            return state.set({ error: action.payload.error, pending: false})
+            return state.merge({ error: action.payload.error, pending: false})
 
-        case ArticlesActions.ADD_ARTICLE:
+        case ArticlesActions.SET_ARTICLE:
             return state.setIn(["articles", action.payload.article.id], action.payload.article)
 
         case ArticlesActions.REMOVE_ARTICLE:
