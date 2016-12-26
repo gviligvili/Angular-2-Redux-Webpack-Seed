@@ -19,11 +19,17 @@
     "types": [
       "hammerjs",
       "jasmine",
+      "sinon",
+      "chai",
+      "sinon-chai",
       "node",
       "selenium-webdriver",
       "source-map",
       "uglify-js",
-      "webpack"
+      "webpack",
+      "immutable",
+      "lodash",
+      "jquery"
     ]
   },
   "exclude": [

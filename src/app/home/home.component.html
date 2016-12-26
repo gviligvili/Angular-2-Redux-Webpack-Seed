@@ -22,6 +22,8 @@
   <hr>
 
   <div>
+    <button class="btn btn-primary" (click)="onBtnClick()"> Increment Value </button>
+      <div>{{counter$ | async}}</div>
     <h4>Local State</h4>
 
     <form (ngSubmit)="submitState(localState.value)" autocomplete="off">

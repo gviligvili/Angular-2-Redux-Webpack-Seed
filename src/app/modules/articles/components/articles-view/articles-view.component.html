@@ -1,0 +1,18 @@
+<div class="container">
+    <div class="row article-row" *ngFor="let article of articles">
+        <div class="article-title">
+            {{article.title}}
+        </div>
+        <div class="contributors-panel">
+
+            Contributors:
+            <div class="contributor" *ngFor="let c of article.contributors">
+                - {{c.name}}
+            </div>
+        </div>
+        <div class="author">
+           Written by: {{article.author.name}}
+        </div>
+    </div>
+</div>
+
