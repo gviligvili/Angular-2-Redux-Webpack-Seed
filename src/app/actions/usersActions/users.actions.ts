@@ -15,12 +15,10 @@ export class UsersActions {
     constructor(private ngRedux: NgRedux<any>) {}
 
     addUser(newUser) {
-        let user = normalize(newUser, userSchema)
+        // Our normalizer wont do much because there isnt so much info in our "userSchema",
+        // but its right practice to normalize your data
+        let normalizedUser = normalize(newUser, userSchema)
+        let user = _.values(normalizedUser.entities.user)[0];
         this.ngRedux.dispatch({ type: UsersActions.ADD_USER, payload: { user }})
-    }
-
-    addUsers(newUsers) {
-        let users = normalize(newUsers, arrayOfUsersSchema)
-        this.ngRedux.dispatch({ type: UsersActions.ADD_USERS, payload: { users }})
     }
 }

@@ -8,10 +8,6 @@ import {ArticlesComponent} from "./articles.component";
 import {ArticlesActions} from "../../actions/articlesActions/articles.actions";
 import {ArticlesView} from "./components/articles-view/articles-view.component";
 
-// import { CreditCardMaskPipe } from './credit-card-mask.pipe';
-// import { CreditCardService } from './credit-card.service';
-// import { CreditCardComponent } from './credit-card.component';
-
 @NgModule({
     imports: [CommonModule],
     declarations: [

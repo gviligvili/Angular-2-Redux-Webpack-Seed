@@ -28,6 +28,11 @@ import {Component, ViewEncapsulation} from '@angular/core';
               </a>
             </li>
             <li class="nav-item">
+              <a [routerLink]=" ['./user-display'] ">
+                  Users
+              </a>
+            </li>
+            <li class="nav-item">
               <a [routerLink]=" ['./about'] ">
                   About
                 </a>

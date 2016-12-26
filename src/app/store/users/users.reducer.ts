@@ -10,9 +10,9 @@ import {ArticlesActions} from "../../actions/articlesActions/articles.actions";
 export function usersReducer(state = USERS_INITIAL_STATE, action: IPayloadAction): any {
 
     switch (action.type) {
-        
+
         case UsersActions.ADD_USER:
-            return state.setIn(["users", action.payload.user.id], action.payload.user)
+            return state.setIn(["users", String(action.payload.user.id)], action.payload.user)
 
         case UsersActions.ADD_USERS:
         case ArticlesActions.FETCH_ARTICLES_SUCCESS:

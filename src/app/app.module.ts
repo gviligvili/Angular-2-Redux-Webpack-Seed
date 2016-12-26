@@ -28,6 +28,7 @@ import {middleware, enhancers} from "./store/index";
 import {NgReduxModule, DevToolsExtension, NgRedux} from "ng2-redux/lib/index";
 import {root} from "rxjs/util/root";
 import {ArticlesModule} from "./modules/articles/articles.module";
+import {UsersDisplayModule} from "./modules/userDisplay/user-display.module";
 
 
 /**
@@ -61,7 +62,8 @@ type StoreType = {
         DatepickerModule,
         NgReduxModule,
         RouterModule.forRoot(ROUTES, {useHash: true, preloadingStrategy: PreloadAllModules}),
-        ArticlesModule
+        ArticlesModule,
+        UsersDisplayModule
     ],
     providers: [ // expose our Services and Providers into Angular's dependency injection
         ENV_PROVIDERS,
@@ -75,13 +77,9 @@ export class AppModule {
     constructor(public appRef:ApplicationRef,
                 private ngRedux:NgRedux<IAppState>,
                 private devTools:DevToolsExtension,
-                private actions:SessionActions
-                /*public appState: AppState*/) {
+                private actions:SessionActions) {
 
         this.configureStore({});
-
-        console.log("################ INITIALIZED STORE #################")
-
     }
 
     configureStore(initState = {}){
@@ -95,6 +93,10 @@ export class AppModule {
     }
 
     hmrOnInit(store:StoreType) {
+        /**
+         *  Please don't remove, Its a ready hmrOnInitFunction, Looking for a better
+         *  way to implement this rather than localStorage.
+         */
         // console.log("################ HMR ON INIT ################");
         //
         // // If store or store.state doesn't exist, return. (Suppose to be when app just started).

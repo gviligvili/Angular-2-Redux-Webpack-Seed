@@ -16,6 +16,7 @@ export let enhancers = [];
 
 if (ENV === "development") {
   // For "bows" module to work
+  // https://www.npmjs.com/package/bows
   localStorage["debug"] = true
 
   middleware.push(
