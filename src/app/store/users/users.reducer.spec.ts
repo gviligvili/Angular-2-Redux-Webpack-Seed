@@ -54,7 +54,7 @@ describe('users reducer', () => {
     });
 
 
-    it('should add user on ADD_USER', () => {
+    it('should add user on SET_USER', () => {
         // Set up
         const user = usersMock[0]
 
@@ -62,7 +62,7 @@ describe('users reducer', () => {
         const nextState = usersReducer(
             initState,
             {
-                type: UsersActions.ADD_USER,
+                type: UsersActions.SET_USER,
                 payload: {user: user}
             });
 
@@ -76,13 +76,13 @@ describe('users reducer', () => {
         });
     });
 
-    it('should add users on ADD_USERS', () => {
+    it('should add users on SET_USERS', () => {
         let usersDict = _.keyBy(usersMock, "id")
 
         const nextState = usersReducer(
             initState,
             {
-                type: UsersActions.ADD_USERS,
+                type: UsersActions.SET_USERS,
                 payload: {users: usersDict}
             });
 

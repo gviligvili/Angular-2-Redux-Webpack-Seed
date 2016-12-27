@@ -24,7 +24,7 @@ var refreshingDataLog = bows("Refreshing Articles View Data !")
 @Component({
     selector: 'article-component',
     template: `
-    <articles-view [articles]="articles" [error]="error" [pending]="pending"></articles-view>
+    <articles-view [articles]="articles" [error]="error" [pending]="pending" (articleSubmit)="onArticleSubmit($event)"></articles-view>
   `
 })
 export class ArticlesComponent implements OnInit {
@@ -91,5 +91,9 @@ export class ArticlesComponent implements OnInit {
     ngOnDestroy() {
         this.articleSub.unsubscribe()
         this.userSub.unsubscribe()
+    }
+
+    onArticleSubmit(article) {
+        this.articlesActions.addArticle(article)
     }
 }

@@ -57,7 +57,8 @@ export class ArticlesActions {
     addArticle(newArticle) {
         let normalizedArticle = normalize(newArticle, articleSchema)
         let article = _.values(normalizedArticle.entities.article)[0]
-        this.ngRedux.dispatch({ type: ArticlesActions.SET_ARTICLE, payload: { article }})
+        let users = normalizedArticle.entities.user
+        this.ngRedux.dispatch({ type: ArticlesActions.SET_ARTICLE, payload: { article , users}})
     }
 
     removeArticle(id: number) {

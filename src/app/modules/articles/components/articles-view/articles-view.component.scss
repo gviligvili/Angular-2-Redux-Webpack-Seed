@@ -5,7 +5,7 @@
   justify-content: center;
 
   .article-row {
-    width: 400px;
+    width: 500px;
     border: 1px solid gray;
     border-radius: 10px;
     margin-bottom: 20px;
@@ -36,5 +36,33 @@
       justify-content: center;
       font-weight: 600;
     }
+  }
+
+  .add-contributor-panel{
+    display:flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+
+    .add-contributor-row{
+      display:flex;
+      flex-direction: row;
+      align-items: center;
+      margin: 5px;
+
+      .delete-contributor-container{
+        height: 50px;
+        width:50px;
+        display:flex;
+        align-items: center;
+        justify-content: center;
+      }
+    }
+  }
+
+  .form-footer{
+    width: 300px;
+    display:flex;
+    justify-content: space-between;
   }
 }

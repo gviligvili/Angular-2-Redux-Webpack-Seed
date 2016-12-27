@@ -9,8 +9,8 @@ import {userSchema, arrayOfUsersSchema} from "../../store/schemas/user.schema";
 
 @Injectable()
 export class UsersActions {
-    static ADD_USER = "ADD_USER"
-    static ADD_USERS = "ADD_USERS"
+    static SET_USER = "SET_USER"
+    static SET_USERS = "SET_USERS"
 
     constructor(private ngRedux: NgRedux<any>) {}
 
@@ -19,6 +19,6 @@ export class UsersActions {
         // but its right practice to normalize your data
         let normalizedUser = normalize(newUser, userSchema)
         let user = _.values(normalizedUser.entities.user)[0];
-        this.ngRedux.dispatch({ type: UsersActions.ADD_USER, payload: { user }})
+        this.ngRedux.dispatch({ type: UsersActions.SET_USER, payload: { user }})
     }
 }

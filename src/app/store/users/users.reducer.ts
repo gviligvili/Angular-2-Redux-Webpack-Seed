@@ -11,11 +11,14 @@ export function usersReducer(state = USERS_INITIAL_STATE, action: IPayloadAction
 
     switch (action.type) {
 
-        case UsersActions.ADD_USER:
+        case UsersActions.SET_USER:
+
+            /** The reason I do string converstion, is because the key must be a string ! safety measure.*/
             return state.setIn(["users", String(action.payload.user.id)], action.payload.user)
 
-        case UsersActions.ADD_USERS:
+        case UsersActions.SET_USERS:
         case ArticlesActions.FETCH_ARTICLES_SUCCESS:
+        case ArticlesActions.SET_ARTICLE:
             return state.mergeIn(["users"], action.payload.users)
         default:
             return state;
