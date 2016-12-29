@@ -1,13 +1,11 @@
 import {IAppState, rootReducer} from './store';
 import {ICounter} from './counter';
-import {ISession} from './session';
 
 const createLogger = require('redux-logger');
 const SESSION_KEY = "current_debug_session_key"
 
 export {
     IAppState,
-    ISession,
     ICounter,
     rootReducer,
 };

@@ -13,9 +13,8 @@ import { MockBackend } from '@angular/http/testing';
 // Load the implementations that should be tested
 // import { AppState } from '../app.service';
 import { HomeComponent } from './home.component';
-import {CounterActions} from "../actions/counter.actions";
+import {CounterActions} from "../actions/counterActions/counter.actions";
 import {NgRedux} from "ng2-redux/lib/index";
-// import { Title } from './title';
 
 describe('Home', () => {
   // provide our implementations or mocks to the dependency injector

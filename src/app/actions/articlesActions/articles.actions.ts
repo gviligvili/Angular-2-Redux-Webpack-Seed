@@ -15,7 +15,7 @@ export class ArticlesActions {
     static SET_ARTICLE = "SET_ARTICLE"
     static REMOVE_ARTICLE = "REMOVE_ARTICLE"
 
-    constructor(private ngRedux: NgRedux<any>, private http: Http) {}
+    constructor(private ngRedux: NgRedux<IAppState>, private http: Http) {}
 
     fetchArticles() {
         this.ngRedux.dispatch({ type: ArticlesActions.FETCH_ARTICLES_REQUEST });
@@ -48,9 +48,9 @@ export class ArticlesActions {
                 return articles
             })
             .catch((err) => {
-                this.ngRedux.dispatch({ type: ArticlesActions.FETCH_ARTICLES_FAILURE, payload: { error: err.message } });
+                let message = err.message || "Error fetching articles"
+                this.ngRedux.dispatch({ type: ArticlesActions.FETCH_ARTICLES_FAILURE, payload: { error: message } });
                 console.error("Error fetching articles")
-                return err
             })
     }
 

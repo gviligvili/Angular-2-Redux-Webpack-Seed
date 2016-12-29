@@ -113,11 +113,13 @@ describe('articles action creators', () => {
         let articleNormalized = normalize(articleData, articleSchema)
         // Getting the article object only.
         let article = _.values(articleNormalized.entities.article)[0]
+        let users = articleNormalized.entities.user
 
         const expectedAction = {
             type: ArticlesActions.SET_ARTICLE, /** It will be the service CLASS INSTANCE !! That's why I can reach his static members.*/
             payload: {
                 article: article,
+                users
             }
         };
 

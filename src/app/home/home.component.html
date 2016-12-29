@@ -1,3 +1,4 @@
+
 <div class="card-container">
   <h1 x-large class="sample-content"><div class="asdasd">Your Content Here : {{data}}</div></h1>
 
@@ -23,7 +24,11 @@
 
   <div>
     <button class="btn btn-primary" (click)="onBtnClick()"> Increment Value </button>
-      <div>{{counter$ | async}}</div>
+      <div style="margin: 20px">{{counter$ | async}}</div>
+    <div style="display:flex; =">
+    <button class="btn btn-primary" (click)="redoCounter()" style="margin-right: 10px">Redo</button>
+     <button class="btn btn-danger" (click)="undoCounter()">Undo</button>
+    </div>
     <h4>Local State</h4>
 
     <form (ngSubmit)="submitState(localState.value)" autocomplete="off">

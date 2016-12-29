@@ -22,9 +22,9 @@ export class ArticlesView implements OnChanges{
 
     constructor(private formBuilder:FormBuilder){
         this.articleForm = formBuilder.group({
-            title: "harta",
+            title: "Example",
             author: formBuilder.group({
-                id: "1000",
+                id: "23",
                 name: "Tal Gvili",
                 }),
             contributors: formBuilder.array([
