@@ -22,13 +22,10 @@ import {NoContentComponent} from './no-content';
 /**
  *  Redux Imports
  */
-import {CounterActions} from "./actions/counterActions/counter.actions";
 import {IAppState, rootReducer} from "./store/store";
 import {middleware, enhancers} from "./store/index";
-import {NgReduxModule, DevToolsExtension, NgRedux} from "ng2-redux/lib/index";
-import {root} from "rxjs/util/root";
-import {ArticlesModule} from "./modules/articles/articles.module";
-import {UsersDisplayModule} from "./modules/userDisplay/user-display.module";
+import {DevToolsExtension, NgRedux} from "ng2-redux/lib/index";
+import {CoreModule} from "./core.module";
 
 
 /**
@@ -56,20 +53,15 @@ type StoreType = {
     ],
     imports: [ // import Angular's modules
         BrowserModule,
-        FormsModule,
+        CoreModule,
         HttpModule,
+        FormsModule,
         AlertModule,
         DatepickerModule,
-        NgReduxModule,
         RouterModule.forRoot(ROUTES, {useHash: true, preloadingStrategy: PreloadAllModules}),
-        ArticlesModule,
-        UsersDisplayModule
     ],
     providers: [ // expose our Services and Providers into Angular's dependency injection
         ENV_PROVIDERS,
-        CounterActions,
-        DevToolsExtension,
-        FormBuilder,
     ]
 })
 export class AppModule {

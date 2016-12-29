@@ -22,16 +22,14 @@ export class ArticlesView implements OnChanges{
 
     constructor(private formBuilder:FormBuilder){
         this.articleForm = formBuilder.group({
-            title: "Example",
+            id: "",
+            title: "",
             author: formBuilder.group({
-                id: "23",
-                name: "Tal Gvili",
+                id: "",
+                name: "",
                 }),
             contributors: formBuilder.array([
-                formBuilder.group({
-                    id: "78",
-                    name: "Rangle.io",
-                })
+                this.initUser()
             ])
         })
     }
@@ -42,6 +40,7 @@ export class ArticlesView implements OnChanges{
 
     onSubmit(articleForm){
         let article = articleForm.getRawValue()
+        console.log(article);
         this.articleSubmit.emit(article)
     }
 
