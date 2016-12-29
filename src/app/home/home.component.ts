@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import {CounterActions} from "../actions/counter.actions";
+import {CounterActions} from "../actions/counterActions/counter.actions";
 import {select, NgRedux} from "ng2-redux/lib/index";
 import {Observable} from "rxjs/Rx";
 import {IAppState} from "../store/store";
@@ -28,7 +28,7 @@ export class HomeComponent {
   date: Date = new Date();
   data: String = "";
   @select(s=> {
-    return s.counter.counter
+    return s.counter.present.counter
   }) private counter$: Observable<ICounter>;
 
 
@@ -43,13 +43,15 @@ export class HomeComponent {
 
   }
 
-  submitState(value: string) {
-    console.log('submitState', value);
-    this.localState.value = '';
-  }
-
   onBtnClick() {
     this.counterActions.increment();
-    console.log(this.ngRedux.getState());
+  }
+
+  redoCounter() {
+    this.counterActions.redo()
+  }
+
+  undoCounter(){
+    this.counterActions.undo();
   }
 }

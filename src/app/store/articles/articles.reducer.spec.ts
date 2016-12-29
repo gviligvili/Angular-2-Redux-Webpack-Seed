@@ -13,6 +13,8 @@ import { Iterable } from 'immutable'
 import {articlesReducer} from './articles.reducer';
 import {ArticlesActions} from "../../actions/articlesActions/articles.actions";
 import {ARTICLES_INITIAL_STATE} from "./articles.initial-state";
+import {normalize} from "normalizr";
+import {arrayOfArticlesSchema} from "../schemas/articles.schema";
 
 let articlesMock = [{
     "id": 1,
@@ -138,6 +140,7 @@ describe('articles reducer', () => {
     it('should make pending status - false , apply articles on FETCH_ARTICLES_SUCCEED', () => {
 
         // Set up
+        let articlesMockObject = normalize(articlesMock, arrayOfArticlesSchema)
 
         // a state which a request was sent. and the state is pending.
         let pendingState = initState.set("pending", true)
@@ -148,7 +151,7 @@ describe('articles reducer', () => {
             pendingState,
             {
                 type: ArticlesActions.FETCH_ARTICLES_SUCCESS,
-                payload: { articles : articlesMock }
+                payload: { articles : articlesMockObject }
             });
 
 
@@ -156,7 +159,7 @@ describe('articles reducer', () => {
         expect(Iterable.isIterable(nextState)).toBeTruthy()
         expect(nextState.get("pending")).toBeFalsy()
         expect(nextState.get("error")).toBeFalsy()
-        expect(nextState.get("articles").toJS()).toEqual(articlesMock)
+        expect(nextState.get("articles").toJS()).toEqual(articlesMockObject)
     });
 
     it('should make pending status - false , apply error on FETCH_ARTICLES_FAILURE', () => {

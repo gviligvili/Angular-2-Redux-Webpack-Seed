@@ -40,7 +40,7 @@ module.exports = function(config) {
     webpack: testWebpackConfig,
 
     // Webpack please don't spam the console when running in karma!
-    webpackServer: { noInfo: true },
+    webpackMiddleware: {stats: 'errors-only'},
 
     /*
      * test results reporter to use
@@ -87,20 +87,24 @@ module.exports = function(config) {
     singleRun: true
   };
 
-  if (process.env.TRAVIS){
-    configuration.browsers = ['ChromeTravisCi'];
+  if (process.env.TRAVIS) {
+    configuration.browsers = [
+      'ChromeTravisCi'
+    ];
   }
 
   // skip coverage in watch mode
   if (!autowatch) {
     configuration.reporters.push('coverage');
+    configuration.reporters.push('remap-coverage');
     configuration.coverageReporter = {
-      dir : 'coverage/',
-      reporters: [
-        { type: 'text-summary' },
-        { type: 'json' },
-        { type: 'html' }
-      ]
+      type: 'in-memory'
+    };
+
+    configuration.remapCoverageReporter = {
+      'text-summary': null,
+      json: './coverage/coverage.json',
+      html: './coverage/html'
     };
 
   }

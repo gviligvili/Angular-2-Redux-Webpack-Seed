@@ -5,6 +5,7 @@ import {HttpModule} from '@angular/http';
 import {RouterModule, PreloadAllModules} from '@angular/router';
 import {removeNgStyles, createNewHosts, createInputTransfer} from '@angularclass/hmr';
 import {AlertModule, DatepickerModule} from 'ng2-bootstrap/ng2-bootstrap';
+import 'bootstrap'
 
 
 /**
@@ -21,13 +22,10 @@ import {NoContentComponent} from './no-content';
 /**
  *  Redux Imports
  */
-import {SessionActions} from "./actions/session.actions";
-import {CounterActions} from "./actions/counter.actions";
 import {IAppState, rootReducer} from "./store/store";
 import {middleware, enhancers} from "./store/index";
-import {NgReduxModule, DevToolsExtension, NgRedux} from "ng2-redux/lib/index";
-import {root} from "rxjs/util/root";
-import {ArticlesModule} from "./modules/articles/articles.module";
+import {DevToolsExtension, NgRedux} from "ng2-redux/lib/index";
+import {CoreModule} from "./core.module";
 
 
 /**
@@ -55,33 +53,22 @@ type StoreType = {
     ],
     imports: [ // import Angular's modules
         BrowserModule,
-        FormsModule,
+        CoreModule,
         HttpModule,
         AlertModule,
         DatepickerModule,
-        NgReduxModule,
         RouterModule.forRoot(ROUTES, {useHash: true, preloadingStrategy: PreloadAllModules}),
-        ArticlesModule
     ],
     providers: [ // expose our Services and Providers into Angular's dependency injection
         ENV_PROVIDERS,
-        CounterActions,
-        DevToolsExtension,
-        FormBuilder,
-        SessionActions,
     ]
 })
 export class AppModule {
     constructor(public appRef:ApplicationRef,
                 private ngRedux:NgRedux<IAppState>,
-                private devTools:DevToolsExtension,
-                private actions:SessionActions
-                /*public appState: AppState*/) {
+                private devTools:DevToolsExtension) {
 
         this.configureStore({});
-
-        console.log("################ INITIALIZED STORE #################")
-
     }
 
     configureStore(initState = {}){
@@ -95,38 +82,29 @@ export class AppModule {
     }
 
     hmrOnInit(store:StoreType) {
-        // console.log("################ HMR ON INIT ################");
-        //
-        // // If store or store.state doesn't exist, return. (Suppose to be when app just started).
-        // if (!store || !store.state) return;
-        // console.log('HMR store', JSON.stringify(store, null, 2));
-        // console.log('%c @@@@@@Store: ', store, " store.state ", store.state, 'background: #222; color: #bada55');
-        //
-        // /**
-        //  *  Set the state we saved before HMR
-        //  */
-        //
-        // if (module.hot) {
-        //     console.log("Got INto IF !@#");
-        //     module.hot.accept("./store/reducers", () => {
-        //         console.log(" MODULE.HOT.ACCEPT @@@@#@%#$%$^$%&$%&");
-        //         debugger;
-        //         const nextReducer = require('./store/reducers');
-        //         this.ngRedux.replaceReducer(nextReducer);
-        //     });
-        // }
-        //
-        // // this.ngRedux.? = this.store.state
+        /**
+         *  Please don't remove, Its a ready hmrOnInitFunction, Looking for a better
+         *  way to implement this rather than localStorage.
+         */
+        console.log("################ HMR ON INIT ################");
+
+        // If store or store.state doesn't exist, return. (Suppose to be when app just started).
+        if (!store || !store.state) return;
+
+        // restore state by dispatch a SET_ROOT_STATE action
+        if (store.state) {
+            this.ngRedux.dispatch({
+                type: 'SET_ROOT_STATE',
+                payload: store.state
+            })
+        }
 
         // set input values
         if ('restoreInputValues' in store) {
-            let restoreInputValues = store.restoreInputValues;
-            setTimeout(restoreInputValues);
+            store.restoreInputValues()
         }
-
-        this.appRef.tick();
-        delete store.state;
-        delete store.restoreInputValues;
+        this.appRef.tick()
+        Object.keys(store).forEach(prop => delete store[prop])
     }
 
     hmrOnDestroy(store:StoreType) {

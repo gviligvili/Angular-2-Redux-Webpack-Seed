@@ -1,7 +1,9 @@
 import { counterReducer } from './counter.reducer';
-import { CounterActions, SessionActions } from '../../actions';
+import {CounterActions} from "../../actions/counterActions/counter.actions";
 import { ICounter } from './counter.types';
 import { INITIAL_STATE } from './counter.initial-state'
+
+
 describe('counter reducer', () => {
   let initState: ICounter;
 
@@ -27,12 +29,5 @@ describe('counter reducer', () => {
       initState,
       { type: CounterActions.DECREMENT_COUNTER });
     expect(nextState.counter).toEqual(previousValue - 1);
-  });
-
-  it('should clear the counter on LOGOUT_USER', () => {
-    const nextState = counterReducer(
-      initState,
-      { type: SessionActions.LOGOUT_USER });
-    expect(nextState).toBe(INITIAL_STATE);
   });
 });

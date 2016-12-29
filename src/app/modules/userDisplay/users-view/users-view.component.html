@@ -1,0 +1,21 @@
+<div class="container">
+    <div class="jumbotron">
+
+        <h3>All users:</h3>
+        <ul class="list-group">
+            <li class="user-item list-group-item" *ngFor="let user of users">{{user.id}} - {{user.name}}</li>
+        </ul>
+    </div>
+
+    <form [formGroup]="userForm" (ngSubmit)="onSubmit()">
+        <div class="form-group">
+            <label>Name</label>
+            <input type="text" class="form-control" id="nameinput" placeholder="Name?" formControlName="name">
+        </div>
+        <div class="form-group">
+            <label>Id</label>
+            <input type="number" class="form-control" id="idinput" placeholder="Id" formControlName="id">
+        </div>
+        <button id="userformSubmit" type="submit" class="btn btn-primary">Submit</button>
+    </form>
+</div>

@@ -1,31 +1,35 @@
-.article-row {
-  width: 400px;
-  border: 1px solid black;
-  border-radius: 10px;
-  margin-bottom: 20px;
+.jumbotron-articles{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
 
-  .article-title{
-    display: flex;
+
+  .add-contributor-panel{
+    display:flex;
+    flex-direction: column;
     align-items: center;
     justify-content: center;
-    height: 30px;
-    border-bottom: 1px solid black;
-  }
 
-  .contributors-panel {
-    padding-top: 5px;
-    padding-left: 10px;
+    .add-contributor-row{
+      display:flex;
+      flex-direction: row;
+      align-items: center;
+      margin: 5px;
 
-    .contributor{
-      padding-top: 3px;
-      padding-left: 7px;
+      .delete-contributor-container{
+        height: 50px;
+        width:50px;
+        display:flex;
+        align-items: center;
+        justify-content: center;
+      }
     }
   }
 
-  .author{
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-weight: 600;
+  .form-footer{
+    width: 300px;
+    display:flex;
+    justify-content: space-between;
   }
 }

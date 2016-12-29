@@ -5,22 +5,21 @@ import { Injectable } from '@angular/core';
 import { NgRedux } from 'ng2-redux';
 import {normalize} from 'normalizr'
 import {userSchema, arrayOfUsersSchema} from "../../store/schemas/user.schema";
+import {IAppState} from "../../store/store";
 
 
 @Injectable()
 export class UsersActions {
-    static ADD_USER = "ADD_USER"
-    static ADD_USERS = "ADD_USERS"
+    static SET_USER = "SET_USER"
+    static SET_USERS = "SET_USERS"
 
-    constructor(private ngRedux: NgRedux<any>) {}
+    constructor(private ngRedux: NgRedux<IAppState>) {}
 
     addUser(newUser) {
-        let user = normalize(newUser, userSchema)
-        this.ngRedux.dispatch({ type: UsersActions.ADD_USER, payload: { user }})
-    }
-
-    addUsers(newUsers) {
-        let users = normalize(newUsers, arrayOfUsersSchema)
-        this.ngRedux.dispatch({ type: UsersActions.ADD_USERS, payload: { users }})
+        // Our normalizer wont do much because there isnt so much info in our "userSchema",
+        // but its right practice to normalize your data
+        let normalizedUser = normalize(newUser, userSchema)
+        let user = _.values(normalizedUser.entities.user)[0];
+        this.ngRedux.dispatch({ type: UsersActions.SET_USER, payload: { user }})
     }
 }

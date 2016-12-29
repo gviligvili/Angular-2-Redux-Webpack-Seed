@@ -1,0 +1,33 @@
+.article-row {
+    width: 500px;
+    border: 1px solid gray;
+    border-radius: 10px;
+    margin-bottom: 20px;
+    background-color: white;
+
+
+    .article-title{
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      height: 30px;
+      border-bottom: 1px solid black;
+    }
+
+    .contributors-panel {
+      padding-top: 5px;
+      padding-left: 10px;
+
+      .contributor{
+        padding-top: 3px;
+        padding-left: 7px;
+      }
+    }
+
+    .author{
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 600;
+    }
+}

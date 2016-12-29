@@ -1,27 +1,23 @@
 /**
  * Created by talgvili on 22/12/2016.
  */
-import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
-import {NgRedux} from "ng2-redux/lib/index";
+import {NgModule} from '@angular/core';
 import {ArticlesComponent} from "./articles.component";
-import {ArticlesActions} from "../../actions/articlesActions/articles.actions";
 import {ArticlesView} from "./components/articles-view/articles-view.component";
-
-// import { CreditCardMaskPipe } from './credit-card-mask.pipe';
-// import { CreditCardService } from './credit-card.service';
-// import { CreditCardComponent } from './credit-card.component';
+import {ArticleBox} from "./components/article-box/article-box.component";
+import {SharedModule} from "../shared.module";
 
 @NgModule({
-    imports: [CommonModule],
+    imports: [
+        SharedModule
+    ],
     declarations: [
         ArticlesComponent,
-        ArticlesView
+        ArticlesView,
+        ArticleBox
     ],
-    providers: [
-        NgRedux,
-        ArticlesActions
-    ],
+    providers: [],
     exports: [ArticlesComponent]
 })
-export class ArticlesModule {}
+export class ArticlesModule {
+}

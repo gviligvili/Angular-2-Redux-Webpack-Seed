@@ -9,13 +9,7 @@ describe('App', () => {
 
   it('should have a title', () => {
     let subject = browser.getTitle();
-    let result  = 'Angular2 Webpack Starter by @gdi2290 from @AngularClass';
-    expect(subject).toEqual(result);
-  });
-
-  it('should have header', () => {
-    let subject = element(by.css('h1')).isPresent();
-    let result  = true;
+    let result  = 'Angular2 & NgRedux2 & Webpack Starter assembled By Tal Gvili';
     expect(subject).toEqual(result);
   });
 
