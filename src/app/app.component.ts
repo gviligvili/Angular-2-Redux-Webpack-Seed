@@ -45,24 +45,8 @@ import {Component, ViewEncapsulation} from '@angular/core';
     </main>
 
     <footer>
-      <span>WebPack Angular 2 Starter by <a [href]="url">@AngularClass</a></span>
-      <div>
-        <a [href]="url">
-          <img [src]="angularclassLogo" width="25%">
-        </a>
-      </div>
+      <span>Angular 2 & NgRedux & Webpack Starter assembeld by Tal Gvili, original seed Created by @AngularClass  <a href="https://twitter.com/AngularClass">@AngularClass</a></span>
     </footer>
   `
 })
-export class AppComponent {
-    angularclassLogo = 'assets/img/angularclass-avatar.png';
-    name = 'Angular 2 Webpack Starterr';
-    url = 'https://twitter.com/AngularClass';
-
-    constructor() {
-    }
-
-    ngOnInit() {
-        console.log('Initial App State', this);
-    }
-}
+export class AppComponent {}

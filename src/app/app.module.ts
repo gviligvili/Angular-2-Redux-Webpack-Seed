@@ -5,6 +5,7 @@ import {HttpModule} from '@angular/http';
 import {RouterModule, PreloadAllModules} from '@angular/router';
 import {removeNgStyles, createNewHosts, createInputTransfer} from '@angularclass/hmr';
 import {AlertModule, DatepickerModule} from 'ng2-bootstrap/ng2-bootstrap';
+import 'bootstrap'
 
 
 /**
@@ -98,7 +99,6 @@ export class AppModule {
 
         // If store or store.state doesn't exist, return. (Suppose to be when app just started).
         if (!store || !store.state) return;
-        console.log('HMR store', JSON.stringify(store, null, 2));
 
         // restore state by dispatch a SET_ROOT_STATE action
         if (store.state) {

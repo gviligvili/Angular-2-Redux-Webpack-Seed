@@ -32,6 +32,5 @@ export class UsersView {
 
     ngOnChanges() {
         changedLop()
-        console.error(" USERS VIEW CHANGED @#$@#$")
     }
 }

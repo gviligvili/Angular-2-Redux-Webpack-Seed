@@ -43,14 +43,8 @@ export class HomeComponent {
 
   }
 
-  submitState(value: string) {
-    console.log('submitState', value);
-    this.localState.value = '';
-  }
-
   onBtnClick() {
     this.counterActions.increment();
-    console.log(this.ngRedux.getState());
   }
 
   redoCounter() {

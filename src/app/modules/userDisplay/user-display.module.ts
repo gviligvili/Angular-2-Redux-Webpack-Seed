@@ -14,8 +14,7 @@ import {ArticlesModule} from "../articles/articles.module";
 @NgModule({
     imports: [
         CommonModule,
-        ReactiveFormsModule,
-        ArticlesModule
+        ReactiveFormsModule
     ],
     declarations: [
         UserDisplayComponent,

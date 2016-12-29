@@ -7,8 +7,7 @@ import {Observable, Subscription} from "rxjs/Rx";
 import {UsersActions} from "../../actions/usersActions/users.actions";
 
 @Component({
-    template: `<users-view [users]='users' (userSubmit)='userSubmited($event)'></users-view>
-               <article-component></article-component>`
+    template: `<users-view [users]='users' (userSubmit)='userSubmited($event)'></users-view>`
 })
 export class UserDisplayComponent {
     private users;

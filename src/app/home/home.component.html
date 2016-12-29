@@ -1,55 +1,116 @@
+<div class="container">
+    <div class="jumbotron" style="background-color:#f7f2d9;">
+        <h2> Angular 2 with NgRedux 2 & webpack Seed assembled by Tal Gvili</h2>
 
-<div class="card-container">
-  <h1 x-large class="sample-content"><div class="asdasd">Your Content Here : {{data}}</div></h1>
+        <pre style="background-color: transparent; border:none; font-size:18px;">
+            The app uses Redux (NgRedux) as data flow.
+            I tried to cover as much as many Redux aspects:
+            -Actions
+            -Reducers
+            -Async
+            -Entities (Schemas, Normalize and Denormalize)
+            - Middlewares and Enhancers
+            - Undo Redo History (See counter reducer).
+            (Didn't include sagas,
+            because seems to me that angular servicers can replace them)
+            while trying to keep right practice.
+            Each of the above covered with tests, to help you get going.
 
-  <div>
-    For material design components use the <a href="https://github.com/AngularClass/angular2-webpack-starter/tree/material2"><b>material2</b></a> branch
-  </div>
-
-  <hr>
-
-  <div>
-    For hot module reloading run
-    <pre>npm run start:hmr</pre>
-  </div>
-  <button type="button" class="btn btn-primary">Default</button>
-  <alert type="info">Hello from ng2-bootstrap  {{ date.toDateString() }}</alert>
-  <div style="display:inline-block; min-height:290px;">
-    <datepicker [(ngModel)]="date" showWeeks="true"></datepicker>
-  </div>
-  <p>Volume-down icon: <span class="glyphicon glyphicon-volume-down"></span></p>
-  font awsome example: <i class="fa fa-camera-retro"></i> font awsome example
-
-  <hr>
-
-  <div>
-    <button class="btn btn-primary" (click)="onBtnClick()"> Increment Value </button>
-      <div style="margin: 20px">{{counter$ | async}}</div>
-    <div style="display:flex; =">
-    <button class="btn btn-primary" (click)="redoCounter()" style="margin-right: 10px">Redo</button>
-     <button class="btn btn-danger" (click)="undoCounter()">Undo</button>
+            The app also support HMR With angular2 and redux. (see Functionality below).
+        </pre>
     </div>
-    <h4>Local State</h4>
 
-    <form (ngSubmit)="submitState(localState.value)" autocomplete="off">
+    <div class="jumbotron" style="background-color:#f7f2d9;">
+        <h2> Functionality </h2>
+        <br>
+        * important to mention you may need to sudo !
+        <br>
+        <h4> Run server (refresh on changes)</h4>
+        <alert type="info">npm run server</alert>
+        <br>
+        <h4> Run server with hmr (Hot Module Replacement)</h4>
+        <alert type="info">npm run hmr</alert>
 
-      <input
-        [value]="localState.value"
-        (input)="localState.value = $event.target.value"
-        placeholder="Submit Local State to App State"
-        autofocus>
+        <p>Lets try it, write something in test box below & change the counter (part of the app data flow)</p>
+        <input
+                [value]="localState.value"
+                (input)="localState.value = $event.target.value"
+                placeholder="Submit Local State to App State"
+                autofocus>
 
-      <button md-raised-button color="primary">Submit Value</button>
-    </form>
-    <!--
-        <input type="text" [value]="localState.value" (input)="localState.value = $event.target.value" autofocus>
-        Rather than wiring up two-way data-binding ourselves with [value] and (input)
-        we can use Angular's [(ngModel)] syntax
-        <input type="text" name="textInput" [(ngModel)]="localState.value" autofocus>
-      -->
+        <button md-raised-button color="primary">Submit Value</button>
+        <!--
+            <input type="text" [value]="localState.value" (input)="localState.value = $event.target.value" autofocus>
+            Rather than wiring up two-way data-binding ourselves with [value] and (input)
+            we can use Angular's [(ngModel)] syntax
+            <input type="text" name="textInput" [(ngModel)]="localState.value" autofocus>
+          -->
 
-    <pre>this.localState = {{ localState | json }}</pre>
+        <pre>this.localState = {{ localState | json }}</pre>
+        <br>
+        <br>
+        <button id="incrementCounter" class="btn btn-primary" (click)="onBtnClick()"> Increment Value</button>
+        <div style="margin: 20px">{{counter$ | async}}</div>
+        <div style="display:flex;">
+            <button id="redoCounter" class="btn btn-primary" (click)="redoCounter()" style="margin-right: 10px">Redo</button>
+            <button id="undoCounter" class="btn btn-danger" (click)="undoCounter()">Undo</button>
+        </div>
+        <p> Now go change some scss or ts file, save and then look up ;)</p>
 
-  </div>
 
+        <h4> Run server in production mode</h4>
+        <alert type="info">npm run server:prod</alert>
+        <br>
+    </div>
+    <div class="jumbotron" style="background-color:#f7f2d9;">
+        <h2> Globals </h2>
+        <alert type="info"> Jquery as $</alert>
+        <alert type="info"> Jquery as $</alert>
+    </div>
+
+    <div class="jumbotron" style="background-color:#f7f2d9;">
+        <h2> Styles </h2>
+        <br>
+        <h3 style="font-weight: 600">
+            Supports css and scss !
+        </h3>
+        <br>
+        <alert type="info"> You can you FontAwsome -<i class="fa fa-spinner fa-pulse fa-3x fa-fw"></i></alert>
+        <alert type="info"> Bootstrap styles applied -
+            <button type="button" class="btn btn-primary">Hola!</button>
+        </alert>
+        <alert type="info"> You can you ng2-Bootstrap - Hello from ng2-bootstrap {{ date.toDateString() }}</alert>
+        <div style="display:inline-block; min-height:290px;">
+            <datepicker [(ngModel)]="date" showWeeks="true"></datepicker>
+        </div>
+        <alert type="danger"> GlyphIcons Needs to be fixed. <p>Volume-down icon: <span
+                class="glyphicon glyphicon-volume-down"></span></p></alert>
+    </div>
+
+    <div class="jumbotron" style="background-color:#f7f2d9;">
+        <h2> Tests </h2>
+        <h4>
+            Test runner : Karma <br>
+            Testing framework : Jasmine <br>
+            Testing tools : Chai & sinon <br>
+        </h4>
+        <br>
+        <alert type="info"> For a single run with coverage : npm run test</alert>
+        <h6> *To see the coverage, after the test run - open coverage/html/index.html. </h6>
+        <br><br>
+        <alert type="info"> For a test watch : npm run watch:test</alert>
+        <h6> *Coverage was remove for testwatch. (because of the rapid runs). </h6>
+        <br>
+        <br>
+        <h4 class="container">
+            The current seed contains various of tests, each in different niche (sync, async, reducers, actions,e2e)
+            They can provide great examples for common needs.
+        </h4>
+    </div>
+
+    <div class="jumbotron" style="background-color:#f7f2d9;">
+        <h2> Credits </h2>
+        Seed : <a href="https://github.com/AngularClass/angular2-webpack-starter"><h4>Angular 2 Seed - from Angular 2 webpack seed by gdi2290 </h4></a>
+        Inspired By: <a href="https://github.com/rangle/angular2-redux-example"><h4>Angular 2 Redux example -  rangle.io</h4></a>
+    </div>
 </div>
