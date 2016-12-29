@@ -1,5 +1,4 @@
 import {
-  inject,
   TestBed
 } from '@angular/core/testing';
 
@@ -13,9 +12,4 @@ describe('App', () => {
       // AppState,
       AppComponent
     ]}));
-
-  it('should have a url', inject([ AppComponent ], (app: AppComponent) => {
-    expect(app.url).toEqual('https://twitter.com/AngularClass');
-  }));
-
 });

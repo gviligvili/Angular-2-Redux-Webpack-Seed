@@ -55,7 +55,6 @@ type StoreType = {
         BrowserModule,
         CoreModule,
         HttpModule,
-        FormsModule,
         AlertModule,
         DatepickerModule,
         RouterModule.forRoot(ROUTES, {useHash: true, preloadingStrategy: PreloadAllModules}),
