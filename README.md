@@ -3,7 +3,7 @@
 [![Stack Share](http://img.shields.io/badge/tech-stack-0690fa.svg?style=flat)](http://stackshare.io/angularclass/angular-2-webpack-starter)
 [![SeedImageBACKUP.png](https://s28.postimg.org/5gr2bsusd/Seed_Image_BACKUP.png)](https://postimg.org/image/7y2tj2eop/)
 
-# Angular2 with Redux & Webpack Starter 
+# Angular2 with Redux & Webpack Starter
 
 This seed is based on [AngularClass Seed](https://github.com/AngularClass/angular2-webpack-starter),
 list of the things I added: 
@@ -30,7 +30,10 @@ Each of the above covered with tests, to help you get going.
 
 The app also support HMR With angular2 and redux. (see Functionality section in the app.).
 
-** There are instruction written in the app home page.**
+**There are more instruction written in the app home page.**
+
+Knock yourself out , 
+Tal Gvili.
 
 ------------------------------------------
 **Angular Class 2 Starter kit Documentation**
