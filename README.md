@@ -2,11 +2,35 @@
 [![taylor swift](https://img.shields.io/badge/secured%20by-taylor%20swift-brightgreen.svg)](https://twitter.com/SwiftOnSecurity)
 [![volkswagen status](https://auchenberg.github.io/volkswagen/volkswargen_ci.svg?v=1)](https://github.com/auchenberg/volkswagen) [![GitHub version](https://badge.fury.io/gh/angularclass%2Fangular2-webpack-starter.svg)](https://badge.fury.io/gh/angularclass%2Fangular2-webpack-starter) [![Dependency Status](https://david-dm.org/angularclass/angular2-webpack-starter.svg)](https://david-dm.org/angularclass/angular2-webpack-starter)
 [![Stack Share](http://img.shields.io/badge/tech-stack-0690fa.svg?style=flat)](http://stackshare.io/angularclass/angular-2-webpack-starter)
-[![SeedImageBACKUP.png](https://s27.postimg.org/44s8zw7hf/Seed_Image_BACKUP.png)](https://postimg.org/image/q3ynn3obj/)
+[![SeedImageBACKUP.png](https://s28.postimg.org/5gr2bsusd/Seed_Image_BACKUP.png)](https://postimg.org/image/7y2tj2eop/)
 
+# Angular2 with Redux & Webpack Starter 
 
-# Angular2 Webpack Starter [![Join Slack](https://img.shields.io/badge/slack-join-brightgreen.svg)](https://angularclass.com/slack-join) [![Join the chat at https://gitter.im/angularclass/angular2-webpack-starter](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/angularclass/angular2-webpack-starter?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
+This seed is based on [AngularClass Seed](https://github.com/AngularClass/angular2-webpack-starter),
+list of the things I added: 
+- Redux & Redux middlewares and enhancers.
+- Redux DevTools **(Important - install the [extension](https://github.com/zalmoxisus/redux-devtools-extension) !)**
+- Sinon and Chai
+- jQuery and Lodash as globals
+- Configured Hot Module Replacement for Redux.
 
+The app uses Redux (NgRedux) as data flow.
+            I tried to cover as much as many Redux aspects while trying to keep right practice:
+            -Actions
+            -Reducers
+            -Async
+            -Entities (Schemas, Normalize and Denormalize)
+            - Middlewares and Enhancers
+            - Undo Redo History (See counter reducer).
+            (Didn't include sagas,
+            because seems to me that angular servicers can replace them).
+            
+            ** Each of the above covered with tests, to help you get going.**
+
+            The app also support HMR With angular2 and redux. (see Functionality section in the app.).
+
+------------------------------------------
+**Angular Class 2 Starter kit Documentation**
 
 > An Angular 2 starter kit featuring [Angular 2](https://angular.io) ([Router](https://angular.io/docs/js/latest/api/router/), [Forms](https://angular.io/docs/js/latest/api/forms/),
 [Http](https://angular.io/docs/js/latest/api/http/),
