@@ -15,19 +15,23 @@ list of the things I added:
 - Configured Hot Module Replacement for Redux.
 
 The app uses Redux (NgRedux) as data flow.
-            I tried to cover as much as many Redux aspects while trying to keep right practice:
-            -Actions
-            -Reducers
-            -Async
-            -Entities (Schemas, Normalize and Denormalize)
-            - Middlewares and Enhancers
-            - Undo Redo History (See counter reducer).
-            (Didn't include sagas,
+
+I tried to cover as much as many Redux aspects while trying to keep right practice:
+
+- Actions
+- Reducers
+- Async
+- Entities (Schemas, Normalize and Denormalize).
+- Middlewares and Enhancers
+- Undo Redo History (See counter reducer).
+(Didn't include sagas,
             because seems to me that angular servicers can replace them).
             
-            ** Each of the above covered with tests, to help you get going.**
+            
+Each of the above covered with tests, to help you get going.
 
-            The app also support HMR With angular2 and redux. (see Functionality section in the app.).
+The app also support HMR With angular2 and redux. (see Functionality section in the app.).
+
 
 ------------------------------------------
 **Angular Class 2 Starter kit Documentation**
