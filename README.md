@@ -13,10 +13,9 @@ list of the things I added:
 - jQuery and Lodash as globals
 - Configured Hot Module Replacement for Redux.
 
-The app uses Redux (NgRedux) as data flow.
+The app uses Redux (NgRedux) as state container.
 
 I tried to cover as much as many Redux aspects while trying to keep right practice:
-
 - Actions
 - Reducers
 - Async
@@ -31,6 +30,7 @@ Each of the above covered with tests, to help you get going.
 
 The app also support HMR With angular2 and redux. (see Functionality section in the app.).
 
+** There are instruction written in the app home page.**
 
 ------------------------------------------
 **Angular Class 2 Starter kit Documentation**
