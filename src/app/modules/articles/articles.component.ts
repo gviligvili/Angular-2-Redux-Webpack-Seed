@@ -28,33 +28,32 @@ var refreshingDataLog = bows("Refreshing Articles View Data !")
   `
 })
 export class ArticlesComponent implements OnInit {
-    private articles:Array<any>
+    private articles:Array<any>;
     private error;
     private pending;
 
 
-    private articleSub:Subscription
-    private userSub:Subscription
-
+    private articleSub:Subscription;
+    private userSub:Subscription;
+    private updates:Subscription;
     /**
      * instead of the @select decorator, you can :
      *     this.articles = this.ngRedux.select('articles');
      */
     @select(state => state.articlesReducer) private articlesReducer$:Observable<any>;
     @select(state => state.usersReducer) private usersReducer$:Observable<any>;
-
     constructor(private articlesActions:ArticlesActions, private ngRedux:NgRedux<any>) {
         console.log("Articles componen on construct");
 
         this.articleSub = this.articlesReducer$.subscribe((data) => {
             articlesReducerChangedLog(data.toJS())
-            this.refreshData()
         });
 
         this.userSub = this.usersReducer$.subscribe((data) => {
             usersReducerChangedLog(data.toJS())
-            this.refreshData()
         })
+
+        this.updates = Observable.merge(this.articlesReducer$, this.usersReducer$).subscribe(()=> this.refreshData())
     }
 
 
