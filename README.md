@@ -22,7 +22,7 @@ I tried to cover as much as many Redux aspects while trying to keep right practi
 - Entities (Schemas, Normalize and Denormalize).
 - Middlewares and Enhancers
 - Undo Redo History (See counter reducer).
--- Working with Immutable.js (although I like the es6 approach)
+- Working with Immutable.js (although I like the es6 approach)
 (Didn't include sagas,
             because seems to me that angular servicers can replace them).
             
@@ -33,9 +33,10 @@ The app also support HMR With angular2 and redux. (see Functionality section in 
 
 **There are more instruction written in the app home page.**
 
-        **To Run the articles server**
-        Please install [json-server](https://github.com/typicode/json-server) globally,
-        And then run :  json-server db.json -p 1337
+**To Run the articles server:**
+Please install [json-server](https://github.com/typicode/json-server) globally, And then run :
+              
+              json-server db.json -p 1337
 
 
 
