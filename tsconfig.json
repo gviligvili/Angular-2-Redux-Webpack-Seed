@@ -28,7 +28,6 @@
       "source-map",
       "uglify-js",
       "webpack",
-      "immutable",
       "lodash",
       "jquery"
     ]

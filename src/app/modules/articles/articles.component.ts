@@ -24,7 +24,7 @@ var refreshingDataLog = bows("Refreshing Articles View Data !")
 @Component({
     selector: 'article-component',
     template: `
-    <articles-view [articles]="articles" [error]="error" [pending]="pending" (articleSubmit)="onArticleSubmit($event)"></articles-view>
+    <articles-view [articles]="articles" [error]="error" [pending]="pending" (articleSubmit)="onArticleSubmit($event)"  (removeArticle)="removeArticle($event)"></articles-view>
   `
 })
 export class ArticlesComponent implements OnInit {
@@ -46,11 +46,11 @@ export class ArticlesComponent implements OnInit {
         console.log("Articles componen on construct");
 
         this.articleSub = this.articlesReducer$.subscribe((data) => {
-            articlesReducerChangedLog(data.toJS())
+            articlesReducerChangedLog(data)
         });
 
         this.userSub = this.usersReducer$.subscribe((data) => {
-            usersReducerChangedLog(data.toJS())
+            usersReducerChangedLog(data)
         })
 
         this.updates = Observable.merge(this.articlesReducer$, this.usersReducer$).subscribe(()=> this.refreshData())
@@ -63,8 +63,7 @@ export class ArticlesComponent implements OnInit {
      * @param data
      */
     refreshData() {
-        let state = this.ngRedux.getState()
-        let articleReducer = state.articlesReducer.toJS();
+        let articleReducer = this.ngRedux.getState().articlesReducer
 
         this.error = articleReducer.error;
         this.pending = articleReducer.pending;
@@ -94,5 +93,9 @@ export class ArticlesComponent implements OnInit {
 
     onArticleSubmit(article) {
         this.articlesActions.addArticle(article)
+    }
+
+    removeArticle(id) {
+        this.articlesActions.removeArticle(id)
     }
 }

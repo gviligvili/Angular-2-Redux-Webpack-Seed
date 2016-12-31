@@ -1,6 +1,6 @@
 <div class="row article-row">
     <div class="article-title">
-        {{article.title}}
+        {{article.id}} - {{article.title}}
     </div>
     <div class="contributors-panel">
 
@@ -9,6 +9,13 @@
             - {{c.name}}
         </div>
     </div>
+
+    <pre>Plase write something below,
+        then add an article with the exact same article id,
+        it will override this article data.
+        while wont destroy the component,
+        there for inputs will stay.</pre>
+    <input type="text" />
     <div class="author">
         Written by: {{article.author.name}}
     </div>

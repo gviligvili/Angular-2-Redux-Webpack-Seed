@@ -17,6 +17,7 @@ export class ArticlesView implements OnChanges{
     @Input() error:any;
     @Input() pending:any;
     @Output() articleSubmit = new EventEmitter();
+    @Output() removeArticle = new EventEmitter();
 
     private articleForm:FormGroup
 
@@ -36,6 +37,10 @@ export class ArticlesView implements OnChanges{
 
     ngOnChanges() {
         blog(this.articles, "pending? ", this.pending, "error? ", this.error);
+    }
+
+    onRemoveSubmit(id){
+        this.removeArticle.emit(id)
     }
 
     onSubmit(articleForm){
@@ -61,5 +66,10 @@ export class ArticlesView implements OnChanges{
     removeContributor(index: number){
         const control = <FormArray>this.articleForm.controls["contributors"];
         control.removeAt(index);
+    }
+
+    trackArticle(index, article) {
+        return article ? article.id : undefined;
+
     }
 }

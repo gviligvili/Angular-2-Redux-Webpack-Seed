@@ -3,7 +3,7 @@
 
         <h3>All users:</h3>
         <ul class="list-group">
-            <li class="user-item list-group-item" *ngFor="let user of users">{{user.id}} - {{user.name}}</li>
+            <li class="user-item list-group-item" *ngFor="let user of users; trackBy:trackUsers">{{user.id}} - {{user.name}}</li>
         </ul>
     </div>
 

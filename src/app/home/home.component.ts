@@ -26,7 +26,9 @@ export class HomeComponent {
   // Set our default values
   localState = { value: '' };
   date: Date = new Date();
-  data: String = "";
+  jqueryIsOn = !!$;
+  lodashIsOn = !!_;
+
   @select(s=> {
     return s.counter.present.counter
   }) private counter$: Observable<ICounter>;
@@ -39,8 +41,6 @@ export class HomeComponent {
 
   ngOnInit() {
     console.log('helllo `Home` component');
-    console.log("loadash ", !!_, "jquery ", !!$);
-
   }
 
   onBtnClick() {

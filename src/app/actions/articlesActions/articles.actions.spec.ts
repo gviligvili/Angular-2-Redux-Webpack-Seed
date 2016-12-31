@@ -112,7 +112,7 @@ describe('articles action creators', () => {
         let articleData = articlesMock[0]
         let articleNormalized = normalize(articleData, articleSchema)
         // Getting the article object only.
-        let article = _.values(articleNormalized.entities.article)[0]
+        let article = articleNormalized.entities.article
         let users = articleNormalized.entities.user
 
         const expectedAction = {
@@ -212,7 +212,8 @@ describe('articles action creators', () => {
 
 
         // Actions
-        articlesActions.fetchArticles().then(testing)
+        debugger;
+        articlesActions.fetchArticles().complete(testing)
 
 
 
@@ -261,7 +262,7 @@ describe('articles action creators', () => {
 
 
         // Actions
-        articlesActions.fetchArticles().then(testing)
+        articlesActions.fetchArticles().complete(testing)
 
 
 
