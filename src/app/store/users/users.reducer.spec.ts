@@ -185,7 +185,7 @@ describe('users reducer', () => {
             });
 
         /**
-         * We use Iterable to check that the state is Immutable !
+         * We check that the state is a fresh new object and do not point to the old state !
          * ITS VERY IMPORTANT !!!
          */
         expect(nextState === initState).toBeFalsy()
@@ -260,7 +260,7 @@ describe('users reducer', () => {
             });
 
         /**
-         * We use Iterable to check that the state is Immutable !
+         * We check that the state is a fresh new object and do not point to the old state !
          * ITS VERY IMPORTANT !!!
          */
         expect(nextState === initState).toBeFalsy()
