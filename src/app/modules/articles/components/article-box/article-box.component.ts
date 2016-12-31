@@ -13,7 +13,15 @@ export class ArticleBox implements OnInit {
     @Input() article;
     constructor() { }
 
-    ngOnInit() { }
+
+
+    ngOnInit(){
+        console.log(" @@@@@@@@@@ On init");
+    }
+
+    ngOnDestroy(){
+        console.error("Destoryed")
+    }
 
     ngOnChanges(){
         articleBoxChangedLogger("With params ", this.article)

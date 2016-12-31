@@ -10,7 +10,19 @@ import {IAppState} from "../../store/store";
 
 @Injectable()
 export class UsersActions {
+
+    /**
+     *  payload: {
+         *      user :  A user object.
+         *  }
+     */
     static SET_USER = "SET_USER"
+
+    /**
+     *  payload: {
+         *      users :  a Users object (In a {key:value} format - { 1: user, 7 : user } .
+         *  }
+     */
     static SET_USERS = "SET_USERS"
 
     constructor(private ngRedux: NgRedux<IAppState>) {}

@@ -22,7 +22,6 @@ I tried to cover as much as many Redux aspects while trying to keep right practi
 - Entities (Schemas, Normalize and Denormalize).
 - Middlewares and Enhancers
 - Undo Redo History (See counter reducer).
--- Working with Immutable.js (although I like the es6 approach)
 (Didn't include sagas,
             because seems to me that angular servicers can replace them).
             

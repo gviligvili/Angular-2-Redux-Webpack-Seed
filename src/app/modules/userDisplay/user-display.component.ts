@@ -17,13 +17,14 @@ export class UserDisplayComponent {
     @select('articlesReducer') private articlesReducer$:Observable<any>
     constructor(private ngRedux:NgRedux<any>, private usersActions:UsersActions) {
         this.userSub = this.usersReducer$.subscribe((usersReducer) => {
-            this.users = _.values(usersReducer.toJS().users);
+            this.users = _.values(usersReducer.users);
         })
     }
 
     userSubmited(newUser){
         this.usersActions.addUser(newUser)
     }
+    
 
     /**
      * IMPORTANT !!!

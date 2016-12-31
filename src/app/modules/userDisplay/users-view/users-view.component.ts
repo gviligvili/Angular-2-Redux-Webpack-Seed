@@ -30,7 +30,20 @@ export class UsersView {
         this.userSubmit.emit(user)
     }
 
+
     ngOnChanges() {
         changedLop()
+    }
+
+    trackUsers(user){
+        return user ? user.id : undefined
+    }
+
+    ngOnInit() {
+        console.log("USERS View INIT ###################");
+    }
+
+    ngOnDestroy() {
+        console.log("USERS View DESTROY ###################");
     }
 }

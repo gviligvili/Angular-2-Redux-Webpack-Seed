@@ -1,15 +1,12 @@
 /**
  * Created by talgvili on 24/12/2016.
  */
+
 /**
  *  Please don't forget, it's a reducer test.
  *  HE SHOULDN'T KNOW ANYTHING ABOUT ANGULAR.
  *  only about recreating states.
  */
-import Immutable from 'immutable'
-import { Iterable } from 'immutable'
-
-
 import {articlesReducer} from './articles.reducer';
 import {ArticlesActions} from "../../actions/articlesActions/articles.actions";
 import {ARTICLES_INITIAL_STATE} from "./articles.initial-state";
@@ -67,42 +64,81 @@ describe('articles reducer', () => {
 
         // Test
         expect(initState).toBe(ARTICLES_INITIAL_STATE);
-
-        /**
-         * We use Iterable to check that the state is Immutable !
-         * ITS VERY IMPORTANT !!!
-         */
-        expect(Iterable.isIterable(initState)).toBeTruthy()
     });
 
     it('should add article on SET_ARTICLE', () => {
         // Set up
-        const article = articlesMock[0]
+        const article =  { [articlesMock[0].id] : articlesMock[0] }
 
         // Action
         const nextState = articlesReducer(
             initState,
             {
                 type: ArticlesActions.SET_ARTICLE,
-                payload: { article: article }
+                payload: { article }
             });
 
 
         /**
-         * We use Iterable to check that the state is Immutable !
+         * IT'S IMPORTANT TO CHECK THAT THE LAST STATE AND THE NEW ONE DONT HAVE THE SAME POINTER !
+         * SAME FOR CHANGED SUBOBJECTS ! (Like articles).
          * ITS VERY IMPORTANT !!!
          */
-
         // Test
-        expect(Iterable.isIterable(nextState)).toBeTruthy()
-        expect(nextState.get("articles").toJS()).toEqual({
-            1 : article
-        });
+        expect(nextState === initState).toBeFalsy()
+        expect(nextState.articles).toEqual(article);
+    });
+
+    it('should override article on SET_ARTICLE', () => {
+        // Set up
+        const oldArticle = articlesMock[1]
+        const newArticle =  { [oldArticle.id] : articlesMock[0] };
+        const previousState = Object.assign(
+            {},
+            initState,
+            {
+                articles : {[oldArticle.id]: oldArticle}
+            });
+
+
+
+        // Action
+        const nextState = articlesReducer(
+            previousState,
+            {
+                type: ArticlesActions.SET_ARTICLE,
+                payload: { article: newArticle }
+            });
+
+
+        /**
+         * IT'S IMPORTANT TO CHECK THAT THE LAST STATE AND THE NEW ONE DONT HAVE THE SAME POINTER !
+         * SAME FOR CHANGED SUBOBJECTS ! (Like articles).
+         * ITS VERY IMPORTANT !!!
+         */
+        // Test
+        expect(nextState === previousState).toBeFalsy()
+        expect(nextState.articles[oldArticle.id]).toEqual(_.values(newArticle)[0]);
+        expect(nextState.articles).toEqual(newArticle);
     });
 
     it('should remove an article on REMOVE_ARTICLE', () => {
         // Set up
-        const previousState = initState.mergeIn(["articles"], { 1: articlesMock[0], 2: articlesMock[1]})
+        const previousState = Object.assign(
+            {},
+            initState,
+            {
+                articles : {1: articlesMock[0], 2: articlesMock[1]}
+            })
+
+        const expected = Object.assign(
+            {},
+            previousState,
+            {
+                articles: {
+                    2: articlesMock[1]
+                }
+            })
 
         // Action
         const nextState = articlesReducer(
@@ -115,10 +151,15 @@ describe('articles reducer', () => {
 
             });
 
-
+        /**
+         * IT'S IMPORTANT TO CHECK THAT THE LAST STATE AND THE NEW ONE DONT HAVE THE SAME POINTER !
+         * SAME FOR CHANGED SUBOBJECTS ! (Like articles).
+         * ITS VERY IMPORTANT !!!
+         */
         // Test
-        expect(Iterable.isIterable(nextState)).toBeTruthy()
-        expect(nextState.toJS()).toEqual(initState.mergeIn(["articles"], {  2: articlesMock[1]}).toJS());
+        expect(nextState === previousState).toBeFalsy()
+        expect(nextState.articles === previousState.articles).toBeFalsy()
+        expect(nextState).toEqual(expected);
     });
 
     it('should be in pending status on FETCH_ARTICLES_REQUEST', () => {
@@ -132,9 +173,9 @@ describe('articles reducer', () => {
 
 
         // Test
-        expect(Iterable.isIterable(nextState)).toBeTruthy()
-        expect(nextState.get("pending")).toBeTruthy()
-        expect(nextState.get("error")).toBeFalsy()
+        expect(initState === nextState).toBeFalsy()
+        expect(nextState.pending).toBeTruthy()
+        expect(nextState.error).toBeFalsy()
     })
 
     it('should make pending status - false , apply articles on FETCH_ARTICLES_SUCCEED', () => {
@@ -143,12 +184,12 @@ describe('articles reducer', () => {
         let articlesMockObject = normalize(articlesMock, arrayOfArticlesSchema)
 
         // a state which a request was sent. and the state is pending.
-        let pendingState = initState.set("pending", true)
+        let previousState = Object.assign({}, initState, { pending : true })
 
 
         // Action
         const nextState = articlesReducer(
-            pendingState,
+            previousState,
             {
                 type: ArticlesActions.FETCH_ARTICLES_SUCCESS,
                 payload: { articles : articlesMockObject }
@@ -156,30 +197,31 @@ describe('articles reducer', () => {
 
 
         // Test
-        expect(Iterable.isIterable(nextState)).toBeTruthy()
-        expect(nextState.get("pending")).toBeFalsy()
-        expect(nextState.get("error")).toBeFalsy()
-        expect(nextState.get("articles").toJS()).toEqual(articlesMockObject)
+        expect(previousState === nextState).toBeFalsy()
+        expect(nextState.articles === articlesMockObject).toBeFalsy()
+        expect(nextState.pending).toBeFalsy()
+        expect(nextState.error).toBeFalsy()
+        expect(nextState.articles).toEqual(articlesMockObject)
     });
 
     it('should make pending status - false , apply error on FETCH_ARTICLES_FAILURE', () => {
         // Set up
 
         // a state which a request was sent. and the state is pending.
-        let pendingState = initState.set("pending", true)
+        let previousState = Object.assign({}, initState, { pending : true })
         let error = new Error("Damn Error")
 
         // Action
         const nextState = articlesReducer(
-            pendingState,
+            previousState,
             {
                 type: ArticlesActions.FETCH_ARTICLES_FAILURE,
                 payload: { error : error }
             });
 
         // Test
-        expect(Iterable.isIterable(nextState)).toBeTruthy()
-        expect(nextState.get("pending")).toBeFalsy()
-        expect(nextState.get("error")).toEqual(error)
+        expect(previousState === nextState).toBeFalsy()
+        expect(nextState.pending).toBeFalsy()
+        expect(nextState.error).toEqual(error)
     });
 });

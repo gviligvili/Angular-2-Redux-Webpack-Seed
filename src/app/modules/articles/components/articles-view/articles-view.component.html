@@ -2,20 +2,21 @@
     <div class="jumbotron jumbotron-articles">
         <div *ngIf="error" class="alert alert-danger"> {{error}}</div>
         <div *ngIf="!error">
-            <article-box [article]="article" *ngFor="let article of articles"></article-box>
+            <article-box [article]="article" *ngFor="let article of articles; trackBy:trackArticle"></article-box>
             <form [formGroup]="articleForm" (ngSubmit)="onSubmit(articleForm)">
                 <div class="form-group">
                     <h4>Aticle ID:</h4>
-                    <input type="text" class="form-control" id="articleid" placeholder="Id?" formControlName="id">
+                    <input type="number" class="form-control" id="articleid" placeholder="Id?" formControlName="id">
                 </div>
                 <div class="form-group">
                     <h4>Title:</h4>
-                    <input type="text" class="form-control" id="titleinput" placeholder="Title?" formControlName="title">
+                    <input type="text" class="form-control" id="titleinput" placeholder="Title?"
+                           formControlName="title">
                 </div>
                 <h4>Author:</h4>
                 <div class="form-group" formGroupName="author">
                     <label>Id</label>
-                    <input type="text" class="form-control" id="idinput" placeholder="Id?" formControlName="id">
+                    <input type="number" class="form-control" id="idinput" placeholder="Id?" formControlName="id">
                     <label>Name</label>
                     <input type="text" class="form-control" id="nameinput" placeholder="Name?" formControlName="name">
                 </div>
@@ -30,7 +31,7 @@
 
                             <div [formGroupName]="i">
                                 <label>Id</label>
-                                <input type="text" class="form-control" placeholder="Id?" formControlName="id">
+                                <input type="number" class="form-control" placeholder="Id?" formControlName="id">
                                 <label>Name</label>
                                 <input type="text" class="form-control" placeholder="Name?" formControlName="name">
                             </div>
@@ -40,6 +41,11 @@
                 <div class="form-footer">
                     <button type="submit" class="btn btn-primary">Submit</button>
                     <button type="button" class="btn btn-primary" (click)="addContributor()">Add Contributor</button>
+                </div>
+                <div class="form-footer" style="margin-top: 20px;">
+                    <input type="text" #toRemove placeholder="Id?"/>
+                    <button type='button' class="btn btn-danger" (click)="onRemoveSubmit(toRemove.value)">Remove
+                    </button>
                 </div>
             </form>
         </div>
