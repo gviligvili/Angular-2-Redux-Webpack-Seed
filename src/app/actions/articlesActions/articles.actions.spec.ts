@@ -212,7 +212,6 @@ describe('articles action creators', () => {
 
 
         // Actions
-        debugger;
         articlesActions.fetchArticles().complete(testing)
 
 
