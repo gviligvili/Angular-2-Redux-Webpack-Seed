@@ -56,13 +56,22 @@ declare module 'modern-lru' {
 }
 */
 
+
+
 // Globals
 declare var _: any;
-declare var lodash: any;
 
-declare var jQuery: any;
-declare var $: any;
-declare var jquery: any;
+declare module '$' {
+  let x: any;
+  export = x;
+}
+//declare var $: typeof _jquery;
+
+
+// Extra variables that live on Global that will be replaced by webpack DefinePlugin
+declare var ENV: string;
+declare var HMR: boolean;
+declare var System: SystemJS;
 
 
 // Extra variables that live on Global that will be replaced by webpack DefinePlugin

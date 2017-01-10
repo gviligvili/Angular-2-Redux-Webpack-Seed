@@ -56,10 +56,6 @@ module.exports = function (options) {
              */
             resolve: {
 
-                  alias: {
-                        sinon: 'sinon/pkg/sinon.js'
-                  },
-
                   /**
                    * An array of extensions that should be used to resolve modules.
                    *
@@ -83,10 +79,6 @@ module.exports = function (options) {
              * See: https://github.com/AngularClass/angular2-webpack-starter/issues/1188#issuecomment-262872034
              */
             module: {
-
-                  noParse: [
-                        /node_modules\/sinon\//,
-                  ],
 
                   rules: [
 
