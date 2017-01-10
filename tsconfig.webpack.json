@@ -19,7 +19,9 @@
     ],
     "types": [
       "hammerjs",
-      "node"
+      "node",
+      "jquery",
+      "lodash"
     ]
   },
   "exclude": [
