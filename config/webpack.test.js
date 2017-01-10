@@ -230,7 +230,7 @@ module.exports = function (options) {
              */
             node: {
                   global: true,
-                  process: false,
+                  process: true,
                   crypto: 'empty',
                   module: false,
                   clearImmediate: false,

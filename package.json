@@ -33,6 +33,7 @@
     "e2e": "npm-run-all -p -r server:prod:ci e2e:only",
     "e2e:only": "npm run protractor",
     "hmr": "npm run server:dev:hmr",
+    "junk": "npm run rimraf --  karma-* ts-node",
     "lint": "npm run tslint \"src/**/*.ts\"",
     "ngc": "./node_modules/.bin/ngc -p tsconfig.webpack.json",
     "postversion": "git push && git push --tags",
