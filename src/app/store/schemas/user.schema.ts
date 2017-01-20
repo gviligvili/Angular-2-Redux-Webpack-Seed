@@ -1,6 +1,8 @@
-import {Schema, arrayOf} from "normalizr";
+import { schema } from "normalizr";
 
-const userSchema = new Schema('user');
-const arrayOfUsersSchema = arrayOf(userSchema)
+// Define a users schema
+const userSchema = new schema.Entity('users');
 
-export { userSchema, arrayOfUsersSchema }
+
+
+export { userSchema }

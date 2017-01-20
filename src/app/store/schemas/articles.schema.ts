@@ -2,16 +2,14 @@
  * Created by talgvili on 22/12/2016.
  */
 
-import { Schema, arrayOf } from 'normalizr';
+import { schema } from 'normalizr';
 import { userSchema } from './user.schema'
-const articleSchema = new Schema("article");
-const arrayOfArticlesSchema = arrayOf(articleSchema)
 
-articleSchema.define({
+
+// Define your article
+const articleSchema = new schema.Entity('articles', {
     author: userSchema,
-    contributors: arrayOf(userSchema)
+    contributors: [userSchema]
 });
 
-
-
-export { articleSchema , arrayOfArticlesSchema}
+export { articleSchema }

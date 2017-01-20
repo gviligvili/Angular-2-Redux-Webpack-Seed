@@ -4,7 +4,7 @@
 import { Injectable } from '@angular/core';
 import { NgRedux } from 'ng2-redux';
 import {normalize} from 'normalizr'
-import {userSchema, arrayOfUsersSchema} from "../../store/schemas/user.schema";
+import {userSchema} from "../../store/schemas/user.schema";
 import {IAppState} from "../../store/store";
 
 

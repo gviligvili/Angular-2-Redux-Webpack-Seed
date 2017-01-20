@@ -2,9 +2,8 @@ import { Injectable } from '@angular/core';
 import { NgRedux } from 'ng2-redux';
 import { IAppState } from '../../store/store';
 import {Http, Response} from "@angular/http";
-import {normalize} from 'normalizr'
-import {articleSchema, arrayOfArticlesSchema} from "../../store/schemas";
-import { denormalize } from "denormalizr";
+import {normalize, denormalize} from 'normalizr'
+import {articleSchema} from "../../store/schemas";
 
 
 @Injectable()
@@ -65,8 +64,8 @@ export class ArticlesActions {
 
     addArticle(newArticle) {
         let normalizedArticle = normalize(newArticle, articleSchema)
-        let article = normalizedArticle.entities.article
-        let users = normalizedArticle.entities.user
+        let article = normalizedArticle.entities.articles
+        let users = normalizedArticle.entities.users
         this.ngRedux.dispatch({ type: ArticlesActions.SET_ARTICLE, payload: { article , users}})
     }
 
@@ -83,6 +82,7 @@ export class ArticlesActions {
      * @param ids - Array of articles ids
      */
     denormalizeArticles(ids){
+        console.time("Denormalize")
         let state = this.ngRedux.getState()
         let articleReducer = state.articlesReducer;
         let usersReducer = state.usersReducer;
@@ -98,26 +98,27 @@ export class ArticlesActions {
 
         // so now we denormalize.
         let entities = {
-            article: relevantNormalizedArticles,
-            user: normalizedUsers
+            articles: relevantNormalizedArticles,
+            users: normalizedUsers
         }
 
-        return denormalize(relevantNormalizedArticles, entities, arrayOfArticlesSchema);
+
+        var d =  denormalize(relevantNormalizedArticles, [articleSchema] ,entities);
+        console.timeEnd("Denormalize")
+        return d;
     }
     
     // private Function
     
     _fetchSuccesful(res: Response){
         let articlesData = res.json()
-
         // Normalizing our data, and dispatching to for everyone who needs to know (in this case, user service
         // should dispatch to the store the received contributors and authors (because they are a user models).
-        let normalizedAnswer = normalize(articlesData, arrayOfArticlesSchema);
+        let normalizedAnswer = normalize(articlesData, [articleSchema]);
 
         // All the articles normalized data
-        let articles = normalizedAnswer.entities.article;
-        let users = normalizedAnswer.entities.user;
-
+        let articles = normalizedAnswer.entities.articles;
+        let users = normalizedAnswer.entities.users;
 
         this.ngRedux.dispatch({
             type: ArticlesActions.FETCH_ARTICLES_SUCCESS,

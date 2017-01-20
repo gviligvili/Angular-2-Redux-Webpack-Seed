@@ -23,9 +23,8 @@ import {ArticlesActions} from './articles.actions';
 import {TestBed, inject, async} from "@angular/core/testing";
 import {HttpModule, Http, BaseRequestOptions, Response, ResponseOptions} from "@angular/http";
 import {MockBackend} from "@angular/http/testing";
-import {normalize} from 'normalizr'
-
-import {articleSchema, arrayOfArticlesSchema} from "../../store/schemas";
+import { normalize } from 'normalizr'
+import {articleSchema} from "../../store/schemas";
 
 class MockRedux extends NgRedux<any> {
     constructor() {
@@ -112,8 +111,8 @@ describe('articles action creators', () => {
         let articleData = articlesMock[0]
         let articleNormalized = normalize(articleData, articleSchema)
         // Getting the article object only.
-        let article = articleNormalized.entities.article
-        let users = articleNormalized.entities.user
+        let article = articleNormalized.entities.articles
+        let users = articleNormalized.entities.users
 
         const expectedAction = {
             type: ArticlesActions.SET_ARTICLE, /** It will be the service CLASS INSTANCE !! That's why I can reach his static members.*/
@@ -228,7 +227,7 @@ describe('articles action creators', () => {
 
         // Setup
 
-        let normalizedArticles = normalize(articlesMock, arrayOfArticlesSchema)
+        let normalizedArticles = normalize(articlesMock, [articleSchema])
         let articles = normalizedArticles.entities.article;
         let users = normalizedArticles.entities.user;
 

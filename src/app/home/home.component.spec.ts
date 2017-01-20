@@ -2,23 +2,22 @@ import {
   inject,
   TestBed
 } from '@angular/core/testing';
-import { Component } from '@angular/core';
 import {
   BaseRequestOptions,
   ConnectionBackend,
   Http
 } from '@angular/http';
 import { MockBackend } from '@angular/http/testing';
-
+import {NgReduxModule} from 'ng2-redux'
 // Load the implementations that should be tested
 // import { AppState } from '../app.service';
 import { HomeComponent } from './home.component';
 import {CounterActions} from "../actions/counterActions/counter.actions";
-import {NgRedux} from "ng2-redux/lib/index";
 
 describe('Home', () => {
   // provide our implementations or mocks to the dependency injector
   beforeEach(() => TestBed.configureTestingModule({
+    imports: [ NgReduxModule],
     providers: [
       BaseRequestOptions,
       MockBackend,
@@ -33,7 +32,6 @@ describe('Home', () => {
       // Title,
       HomeComponent,
       CounterActions,
-        NgRedux,
     ]
   }));
 

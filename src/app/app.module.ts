@@ -1,10 +1,9 @@
 import {NgModule, ApplicationRef} from '@angular/core';
 import {BrowserModule} from '@angular/platform-browser';
-import {FormsModule, FormBuilder} from '@angular/forms';
 import {HttpModule} from '@angular/http';
 import {RouterModule, PreloadAllModules} from '@angular/router';
 import {removeNgStyles, createNewHosts, createInputTransfer} from '@angularclass/hmr';
-import {AlertModule, DatepickerModule} from 'ng2-bootstrap/ng2-bootstrap';
+import {AlertModule, DatepickerModule} from 'ng2-bootstrap';
 
 
 /**
@@ -25,6 +24,7 @@ import {IAppState, rootReducer} from "./store/store";
 import {middleware, enhancers} from "./store/index";
 import {DevToolsExtension, NgRedux} from "ng2-redux/lib/index";
 import {CoreModule} from "./core.module";
+import {SharedModule} from "./modules/shared.module";
 
 
 /**
@@ -53,9 +53,10 @@ type StoreType = {
     imports: [ // import Angular's modules
         BrowserModule,
         CoreModule,
+        SharedModule,
         HttpModule,
-        AlertModule,
-        DatepickerModule,
+        AlertModule.forRoot(),
+        DatepickerModule.forRoot(),
         RouterModule.forRoot(ROUTES, {useHash: true, preloadingStrategy: PreloadAllModules}),
     ],
     providers: [ // expose our Services and Providers into Angular's dependency injection
@@ -98,18 +99,20 @@ export class AppModule {
             })
         }
 
-        // set input values
-        if ('restoreInputValues' in store) {
-            store.restoreInputValues()
-        }
-        this.appRef.tick()
-        Object.keys(store).forEach(prop => delete store[prop])
+        // set input values, wait 2 for the app to load
+        setTimeout(() =>{
+            if ('restoreInputValues' in store) {
+                store.restoreInputValues()
+            }
+            this.appRef.tick()
+            Object.keys(store).forEach(prop => delete store[prop])
+        }, 2000)
+
     }
 
     hmrOnDestroy(store:StoreType) {
         console.log("################# HMR ON DESTROY #################");
 
-        console.log(module.hot)
         const cmpLocation = this.appRef.components.map(cmp => cmp.location.nativeElement);
         // save state
         const state = this.ngRedux.getState()
