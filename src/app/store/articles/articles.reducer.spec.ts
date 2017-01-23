@@ -10,8 +10,8 @@
 import {articlesReducer} from './articles.reducer';
 import {ArticlesActions} from "../../actions/articlesActions/articles.actions";
 import {ARTICLES_INITIAL_STATE} from "./articles.initial-state";
-import {normalize} from "normalizr";
-import {arrayOfArticlesSchema} from "../schemas/articles.schema";
+import {normalize} from 'normalizr'
+import {articleSchema} from "../schemas/articles.schema";
 
 let articlesMock = [{
     "id": 1,
@@ -181,7 +181,7 @@ describe('articles reducer', () => {
     it('should make pending status - false , apply articles on FETCH_ARTICLES_SUCCEED', () => {
 
         // Set up
-        let articlesMockObject = normalize(articlesMock, arrayOfArticlesSchema)
+        let articlesMockObject = normalize(articlesMock, [articleSchema])
 
         // a state which a request was sent. and the state is pending.
         let previousState = Object.assign({}, initState, { pending : true })

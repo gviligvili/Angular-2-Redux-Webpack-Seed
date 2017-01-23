@@ -5,6 +5,7 @@
 import {Component, OnInit} from '@angular/core';
 import {ArticlesActions} from "../../actions/articlesActions/articles.actions";
 import {Observable, Subscription} from "rxjs/Rx";
+import {AnonymousSubject} from "rxjs/Subject";
 import {select, NgRedux} from "ng2-redux";
 import {denormalize} from "denormalizr";
 
@@ -35,25 +36,41 @@ export class ArticlesComponent implements OnInit {
 
     private articleSub:Subscription;
     private userSub:Subscription;
-    private updates:Subscription;
+
+
     /**
      * instead of the @select decorator, you can :
      *     this.articles = this.ngRedux.select('articles');
      */
-    @select(state => state.articlesReducer) private articlesReducer$:Observable<any>;
-    @select(state => state.usersReducer) private usersReducer$:Observable<any>;
+    @select(state => state.articlesReducer) private articlesReducer$:AnonymousSubject<any>;
+    @select(state => state.usersReducer) private usersReducer$:AnonymousSubject<any>;
     constructor(private articlesActions:ArticlesActions, private ngRedux:NgRedux<any>) {
-        console.log("Articles componen on construct");
 
+        /**
+         * Subscriptions .
+         */
         this.articleSub = this.articlesReducer$.subscribe((data) => {
-            articlesReducerChangedLog(data)
+            articlesReducerChangedLog(data, new Date().getTime())
         });
 
         this.userSub = this.usersReducer$.subscribe((data) => {
-            usersReducerChangedLog(data)
+            usersReducerChangedLog(data, new Date().getTime())
         })
 
-        this.updates = Observable.merge(this.articlesReducer$, this.usersReducer$).subscribe(()=> this.refreshData())
+        let merge$ = Observable.merge(this.usersReducer$.delay(1), this.articlesReducer$);
+
+        merge$.do(() => {
+            this.refreshData();
+            console.error("REGULAR UPDATE !", new Date().getTime());
+        }).subscribe(() => {})
+
+
+        // TODO : why it doesn't work as expected?!
+        // The merge$ emits values, and here it only emits once and happens again only
+        // when the reducers change much later.
+        let throttle$ = merge$.throttleTime(5).do(() => {
+            console.error("THROTTLE UPDATE !", new Date().getTime());
+        }).subscribe(() => {})
     }
 
 
