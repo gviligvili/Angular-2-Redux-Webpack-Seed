@@ -14,3 +14,22 @@ dist/*
 # Dependency directories
 node_modules
 node_modules/*
+
+#webstorm
+.idea
+.idea/*
+
+#karma-generated
+karma-*
+karma-*/
+
+# generated
+ts-node/
+ts-node/*
+
+# yarn
+yarn.lock
+
+#vs
+.history
+.history/*

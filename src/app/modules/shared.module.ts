@@ -1,3 +1,4 @@
+import { MyScrollbar } from './../directives/myScrollbar';
 import {NgModule}            from '@angular/core';
 import {CommonModule}        from '@angular/common';
 import {FormsModule, ReactiveFormsModule}         from '@angular/forms';
@@ -8,11 +9,13 @@ import {FormsModule, ReactiveFormsModule}         from '@angular/forms';
         CommonModule
     ],
     declarations: [
+        MyScrollbar
     ],
     exports: [
         CommonModule,
         FormsModule,
-        ReactiveFormsModule
+        ReactiveFormsModule,
+        MyScrollbar
     ]
 })
 export class SharedModule {

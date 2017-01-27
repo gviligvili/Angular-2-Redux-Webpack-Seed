@@ -31,7 +31,7 @@ export class UsersActions {
         // Our normalizer wont do much because there isnt so much info in our "userSchema",
         // but its right practice to normalize your data
         let normalizedUser = normalize(newUser, userSchema)
-        let user = _.values(normalizedUser.entities.user)[0];
+        let user = _.values(normalizedUser.entities.users)[0];
         this.ngRedux.dispatch({ type: UsersActions.SET_USER, payload: { user }})
     }
 }

@@ -92,6 +92,7 @@
     "ng2-redux": "5.1.0",
     "node-sass": "^4.0.0",
     "normalizr": "^3.1.0",
+    "perfect-scrollbar": "^0.6.16",
     "redux": "^3.6.0",
     "redux-logger": "^2.7.4",
     "redux-undo": "^0.6.1",
