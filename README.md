@@ -32,9 +32,17 @@ The app also support HMR With angular2 and redux. (see Functionality section in 
 
 **There are more instruction written in the app home page.**
 
-**To Run the articles server:**
-Please install [json-server](https://github.com/typicode/json-server) globally, And then run :
+**Get started**
+
+            git clone https://github.com/gviligvili/Angular-2-Redux-Webpack-Seed.git
+            cd Angular-2-Redux-Webpack-Seed
+            npm install
+            npm run server
+            
+**Optional - To Run the articles server:**
+You will need to install [json-server](https://github.com/typicode/json-server) globally and lift:
               
+              npm install -g json-server
               json-server db.json -p 1337
 
 
